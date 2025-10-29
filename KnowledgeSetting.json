@@ -1,0 +1,496 @@
+{
+  "name": "KnowledgeSetting",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "hour": 23
+            }
+          ]
+        },
+        "authentication": "airtableTokenApi",
+        "baseId": {
+          "__rl": true,
+          "value": "https://airtable.com/appXBHmjTdHh5YZ7U/tblLuyPYLxuT07nAF/viwJJK4lKyw4G8995",
+          "mode": "url"
+        },
+        "tableId": {
+          "__rl": true,
+          "value": "Websites",
+          "mode": "id"
+        },
+        "triggerField": "Created",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.airtableTrigger",
+      "typeVersion": 1,
+      "position": [
+        -400,
+        -16
+      ],
+      "id": "6b0f7648-6694-45d4-96a6-4c806790d698",
+      "name": "Airtable Trigger",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "UxM8ezI0fcNDfGnr",
+          "name": "Airtable account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.fields.Website }}"
+      },
+      "type": "n8n-nodes-scrapeninja.scrapeNinja",
+      "typeVersion": 1,
+      "position": [
+        -176,
+        -16
+      ],
+      "id": "ffb453a9-277c-484f-8366-ccbdb542d4fb",
+      "name": "ScrapeNinja",
+      "credentials": {
+        "scrapeNinjaApi": {
+          "id": "kCWOdOfTlZ7L6mvW",
+          "name": "ScrapeNinja account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "sonar",
+        "messages": {
+          "message": [
+            {
+              "content": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('message0_Text', ``, 'string') }}"
+            }
+          ]
+        },
+        "simplify": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Simplify_Output', ``, 'boolean') }}",
+        "options": {},
+        "requestOptions": {}
+      },
+      "type": "n8n-nodes-base.perplexityTool",
+      "typeVersion": 1,
+      "position": [
+        1408,
+        560
+      ],
+      "id": "bd5b31b0-ae02-4864-9519-4c7e7709c55e",
+      "name": "Message a model in Perplexity",
+      "credentials": {
+        "perplexityApi": {
+          "id": "1bsNUyGlQGIg1S1n",
+          "name": "Perplexity account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Define the entity using only the information provided. {{ $json.body }}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        48,
+        -16
+      ],
+      "id": "4ae99f48-af80-4ea8-a062-691f3ce3dbbb",
+      "name": "WebsiteInfo"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Describe the persona of the entity in question. A persona refers to the character or role that someone (or something) adopts, especially in public or social contexts. This includes the public image, personality traits, behaviors, and values the entity projects to others.\n\nPrompt Example:\n\"Please provide a detailed description of the entity's persona. Consider the following aspects in your response:\n\nWhat character or role does the entity typically adopt in public or social settings?\n\nHow would you describe the entity's public image or reputation?\n\nWhat personality traits, behaviors, and values does the entity consistently project?\n\nAre there any specific ways the entity differentiates itself from others through its persona?\n\nHow does this persona influence interactions with others or the broader community?\"\n\nFeel free to elaborate on any unique characteristics or nuances that define the entity's persona. {{ $json.output }}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        992,
+        0
+      ],
+      "id": "bcc48199-8c7e-4daf-b95d-2da9eb5e1005",
+      "name": "Persona"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Given the following persona description, identify and articulate the core messages that should consistently represent this entity in communications, campaigns, and stakeholder engagements.\n\nInstructions:\n\nReview the persona overview carefully.\n\nList 3–5 core messages that capture the essence of the entity’s purpose, vision, and unique value.\n\nFor each core message, provide a brief explanation (1–2 sentences) of why it aligns with the persona.\n\nEnsure the language and tone reflect the entity’s style and values.\n\n {{ $json.output }}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        1440,
+        0
+      ],
+      "id": "e6845fd9-958c-4295-b9b4-16670ed4888f",
+      "name": "Core Messages"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Based on the core messages provided, please identify and list the main target audiences. For each target audience, include:\n\nAudience Name: A concise label for the group (e.g., \"Urban Millennials,\" \"Policy Makers,\" \"Small Business Owners\").\n\nAudience Description: Briefly describe this group, including key characteristics such as demographics, interests, needs, or challenges relevant to the core messages.\n\nRelevant Core Messages: Specify which core messages are most pertinent to this audience and explain why.  \n\nRelevant social media platforms: The social media platform this target audience is most likely to be on. \n\n{{ $json.output }}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        1840,
+        0
+      ],
+      "id": "fa9fd964-ba59-4da5-8059-1e707cf12068",
+      "name": "Target Audiences"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=For each audience provided in description of target audiences, identify and describe the most effective communication style(s) to reach them. Consider factors such as language, tone, medium, frequency, and cultural context. Explain why each style is suitable for the audience and provide practical examples of how to apply it in real-world communications. \n\n{{ $json.output }}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        2224,
+        0
+      ],
+      "id": "d0090409-c418-4b03-9d42-ace26e56b3f2",
+      "name": "CommunicationStyle"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Based on the following persona, please provide concise background history snippets that highlight key events, achievements, or formative experiences relevant to this entity. Focus on details that shaped their current identity, values, or mission. Make sure to use the perplexity search tool to verify the accuracy of the historical events and only provide ones that are true. \n\nGuidelines:\nEmphasize pivotal moments, turning points, or influential relationships.\n\nUse a tone and style that aligns with the persona's character or organizational voice. \n\n{{ $json.output }}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        1472,
+        240
+      ],
+      "id": "4e223618-6f6f-4770-9210-549738f3dd17",
+      "name": "BackgroundHistory"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Consider the persona of the entity. What are five descriptive adjectives that best capture the essence, character, or qualities of this entity? Please select adjectives that reflect its personality, values, and distinctive traits.\n\nExample Usage\nFor a Brand:\n\"Consider the persona of Patagonia, an environmentally conscious outdoor clothing brand. What are five descriptive adjectives that best capture its essence, character, or qualities? Please select adjectives that reflect its personality, values, and distinctive traits.\"\n\nFor a Person:\n\"Consider the persona of a Peace Corps volunteer dedicated to sustainable development. What are five descriptive adjectives that best capture their essence, character, or qualities? Please select adjectives that reflect their personality, values, and distinctive traits.\"\n\nFor a Web3 Project:\n\"Consider the persona of dMeter, a decentralized MRV platform focused on global sustainability monitoring. What are five descriptive adjectives that best capture its essence, character, or qualities? Please select adjectives that reflect its personality, values, and distinctive traits.\"\n\nTips for Effective Results\nClearly describe the entity’s persona or context.\n\nEncourage specificity and relevance to the entity’s core identity.\n\nAsk for a brief rationale for each adjective, if deeper insight is needed.\n\nThis prompt can be adapted for brands, individuals, organizations, or digital projects to elicit adjectives that authentically represent their persona. {{ $json.output }}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        1440,
+        -176
+      ],
+      "id": "f60ae58e-429c-402c-8d66-7f65672ddc7e",
+      "name": "AdjectivesEntity"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Please provide example messages for each audience in the list below. For each audience, use the communication style that is most effective for reaching and engaging them.\n\nList the target audience.\n\nState the recommended communication style for that audience (e.g., formal, conversational, technical, storytelling, visual, data-driven, etc.).\n\nWrite a brief example message (2-3 sentences) that demonstrates how to communicate effectively with that audience using the chosen style. \n\n{{ $json.output }}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        2656,
+        0
+      ],
+      "id": "bf1253cd-e1d7-4897-9695-df6b0548a78f",
+      "name": "ExampleMessages"
+    },
+    {
+      "parameters": {
+        "model": "openrouter/cypher-alpha:free",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        304,
+        208
+      ],
+      "id": "30551c87-f3f1-4402-986f-d14b51918c91",
+      "name": "Cypher",
+      "credentials": {
+        "openRouterApi": {
+          "id": "U0a4bg7KOjNgcIPy",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "deepseek/deepseek-chat-v3-0324:free",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        176,
+        208
+      ],
+      "id": "f56ca509-d3a3-4c9b-acd3-0ff5d4c33e1e",
+      "name": "Deepseek",
+      "credentials": {
+        "openRouterApi": {
+          "id": "U0a4bg7KOjNgcIPy",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Search for web pages, news articles, blogs, forums, and other online sources mentioning this entity. Focus on how the entity presents itself, its public image, and the context in which it appears. Summarize key perceptions, notable mentions, and the types of narratives or discussions associated with the entity across the indexed web.\n\nKey Elements to Include\nOfficial Presence: Identify the entity’s official website(s), published statements, and self-descriptions.\n\nMedia Coverage: Summarize news articles, press releases, and blog posts that discuss or analyze the entity.\n\nCommunity Discussions: Highlight forum threads, Q&A sites, or comment sections where the entity is a topic of conversation.\n\nPublic Perception: Synthesize opinions, sentiment, and recurring themes found in reviews, editorials, and user-generated content.\n\nNotable Mentions: Point out high-profile stories, viral articles, or widely referenced web content involving the entity.\n\nContext: Specify the types of sources (e.g., news, blogs, forums, official pages) and the nature of the conversations (e.g., informational, critical, supportive, speculative). {{ $json.output }}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        528,
+        0
+      ],
+      "id": "44d8e478-b21b-45ea-954c-6e10bac97f92",
+      "name": "EntitySummarization"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Airtable Trigger": {
+      "main": [
+        [
+          {
+            "node": "ScrapeNinja",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ScrapeNinja": {
+      "main": [
+        [
+          {
+            "node": "WebsiteInfo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message a model in Perplexity": {
+      "ai_tool": [
+        [
+          {
+            "node": "EntitySummarization",
+            "type": "ai_tool",
+            "index": 0
+          },
+          {
+            "node": "BackgroundHistory",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WebsiteInfo": {
+      "main": [
+        [
+          {
+            "node": "EntitySummarization",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Persona": {
+      "main": [
+        [
+          {
+            "node": "Core Messages",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "BackgroundHistory",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AdjectivesEntity",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Core Messages": {
+      "main": [
+        [
+          {
+            "node": "Target Audiences",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Target Audiences": {
+      "main": [
+        [
+          {
+            "node": "CommunicationStyle",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "CommunicationStyle": {
+      "main": [
+        [
+          {
+            "node": "ExampleMessages",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Deepseek": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "WebsiteInfo",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "EntitySummarization",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Persona",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Persona",
+            "type": "ai_languageModel",
+            "index": 1
+          },
+          {
+            "node": "AdjectivesEntity",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Core Messages",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "BackgroundHistory",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Target Audiences",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "CommunicationStyle",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "ExampleMessages",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cypher": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "WebsiteInfo",
+            "type": "ai_languageModel",
+            "index": 1
+          },
+          {
+            "node": "EntitySummarization",
+            "type": "ai_languageModel",
+            "index": 1
+          },
+          {
+            "node": "AdjectivesEntity",
+            "type": "ai_languageModel",
+            "index": 1
+          },
+          {
+            "node": "Core Messages",
+            "type": "ai_languageModel",
+            "index": 1
+          },
+          {
+            "node": "BackgroundHistory",
+            "type": "ai_languageModel",
+            "index": 1
+          },
+          {
+            "node": "Target Audiences",
+            "type": "ai_languageModel",
+            "index": 1
+          },
+          {
+            "node": "CommunicationStyle",
+            "type": "ai_languageModel",
+            "index": 1
+          },
+          {
+            "node": "ExampleMessages",
+            "type": "ai_languageModel",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "EntitySummarization": {
+      "main": [
+        [
+          {
+            "node": "Persona",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "e28d504f-bd1b-4db2-8f75-69a7038c60f1",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "1b2acf6335783249b428ec232a8da689f33ea1e5291dd7cc36a412d57bc021a5"
+  },
+  "id": "3VY1rABrJGnBKNiV",
+  "tags": []
+}

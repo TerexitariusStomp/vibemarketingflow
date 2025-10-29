@@ -1,0 +1,7135 @@
+{
+  "name": "DailyFlow",
+  "nodes": [
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Create a prompt for blog generation based upon the entity description and the most relevant news to that entity. \n\nEntity Description\n {{ $json.EntitySummary }}{{ $json.Adjectives }}{{ $json['Core Messages'] }}{{ $json['Target Audience'] }}{{ $json.CommunicationStyle }}{{ $json.ExampleMessages }}\n\nNews\n{{ $('Airtable Trigger1').item.json.fields.LATwitterNews }}{{ $('Airtable Trigger1').item.json.fields.TrendSANews }}{{ $('Airtable Trigger1').item.json.fields.AucklandTwitterNews }}{{ $('Airtable Trigger1').item.json.fields.DenverTwitterNews }}{{ $('Airtable Trigger1').item.json.fields.NewsTrendsSANews }}{{ $('Airtable Trigger1').item.json.fields.CryptocurrencyNews }}{{ $('Airtable Trigger1').item.json.fields.TopTiktokNews }}{{ $('Airtable Trigger1').item.json.fields.TrendTiktokNews }}{{ $('Airtable Trigger1').item.json.fields.GlobalTrendsNews }}{{ $('Airtable Trigger1').item.json.fields.SentCryptoNews }}{{ $('Airtable Trigger1').item.json.fields.EnergyNews }}{{ $('Airtable Trigger1').item.json.fields.TechnologyNews }}{{ $('Airtable Trigger1').item.json.fields.CryptoNews }}{{ $('Airtable Trigger1').item.json.fields.MarketNews }}{{ $('Airtable Trigger1').item.json.fields.VancouverNews }}{{ $('Airtable Trigger1').item.json.fields.LondonNews }}{{ $('Airtable Trigger1').item.json.fields.CapetownNews }}{{ $('Airtable Trigger1').item.json.fields.LifestyleNews }}{{ $('Airtable Trigger1').item.json.fields.SFNews }}{{ $('Airtable Trigger1').item.json.fields.TechNews }}{{ $('Airtable Trigger1').item.json.fields.AucklandNews }}{{ $('Airtable Trigger1').item.json.fields.ScienceNews }}{{ $('Airtable Trigger1').item.json.fields.TorontoNews }}{{ $('Airtable Trigger1').item.json.fields.EnvNews }}{{ $('Airtable Trigger1').item.json.fields.SydneyNews }}{{ $('Airtable Trigger1').item.json.fields.StartupNews }}{{ $('Airtable Trigger1').item.json.fields.NYNews }}{{ $('Airtable Trigger1').item.json.fields.BusinessNews }}{{ $('Airtable Trigger1').item.json.fields.TopTechNews }}{{ $('Airtable Trigger1').item.json.fields.EconomyNews }}{{ $('Airtable Trigger1').item.json.fields.DubaiTwitterNews }}{{ $('Airtable Trigger1').item.json.fields.NYTwitterNews }}{{ $('Airtable Trigger1').item.json.fields.LondonTwitterNews }}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.1,
+      "position": [
+        -592,
+        -6324
+      ],
+      "id": "45c508c2-b1ed-4b69-bd79-cd12b7310c63",
+      "name": "AI Agent1"
+    },
+    {
+      "parameters": {
+        "model": "google/gemini-2.0-flash-001",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        304,
+        -6692
+      ],
+      "id": "dfaf7934-ca9f-42f2-996f-db9dbb5478d5",
+      "name": "OpenRouter Chat Model1",
+      "credentials": {
+        "openRouterApi": {
+          "id": "U0a4bg7KOjNgcIPy",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "base": {
+          "__rl": true,
+          "value": "appXBHmjTdHh5YZ7U",
+          "mode": "list",
+          "cachedResultName": "N8nFlow",
+          "cachedResultUrl": "https://airtable.com/appXBHmjTdHh5YZ7U"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tbl68MH4pQgGu7XS5",
+          "mode": "list",
+          "cachedResultName": "EntityDescrips",
+          "cachedResultUrl": "https://airtable.com/appXBHmjTdHh5YZ7U/tbl68MH4pQgGu7XS5"
+        },
+        "id": "recbLQheSnAftrrpM",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        -816,
+        -6324
+      ],
+      "id": "1388bff4-927b-43c9-affa-bbb1c55d2f1c",
+      "name": "Get a record1",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "UxM8ezI0fcNDfGnr",
+          "name": "Airtable account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Always use the Perplexity tool attached to ensure factual acccuracy. Generate one original, engaging Blog post using the provided idea as creative inspiration. \n\nReformat and polish the content for clean display on a WordPress blog. Remove code characters like \\n, fix spacing and line breaks, and convert all headings to proper markdown (#, ##, etc.). Retain all structure, hyperlinks, and bullet points. Make it ready for copy-paste into WordPress.\n\nDo not simply rephrase or slightly modify) the idea.\n\nTailor each Blog post to fit the entity’s persona, core messages, target audience, and communication style as described in the Entity Context.\n\nEnsure every Blog post authentically reflects the entity’s voice and values. \n\nKeep Blog posts engaging, suitable for Blog's character limits  (100,000 characters or less) and best practices.\n\nMaintain factual integrity: Do not include content based on unverifiable events or occurrences.\n\nDo not include the entity’s name, website (or any part of the website name), or any other identifying information related to the entity in any response. Write each blog post in first person.\n\nEntity\n{{ $('Get a record1').item.json.EntitySummary }} {{ $('Get a record1').item.json.Persona }}  {{ $('Get a record1').item.json.CommunicationStyle }} {{ $('Get a record1').item.json.ExampleMessages }} {{ $('Get a record1').item.json['Target Audience'] }}\n{{ $('Get a record1').item.json.EntitySummary }}{{ $('Get a record1').item.json['Core Messages'] }}\nIdea\n{{ $json.output }}",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.1,
+      "position": [
+        -192,
+        -6324
+      ],
+      "id": "c93ab071-59b1-4742-9a0f-c22f4fb3a8b1",
+      "name": "BlogIdea",
+      "retryOnFail": true,
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "model": "sonar",
+        "messages": {
+          "message": [
+            {
+              "content": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('message0_Text', ``, 'string') }}"
+            }
+          ]
+        },
+        "options": {},
+        "requestOptions": {}
+      },
+      "type": "n8n-nodes-base.perplexityTool",
+      "typeVersion": 1,
+      "position": [
+        -96,
+        -6100
+      ],
+      "id": "71fd04be-9235-45f2-ae5a-532e21847241",
+      "name": "Message a model in Perplexity",
+      "credentials": {
+        "perplexityApi": {
+          "id": "1bsNUyGlQGIg1S1n",
+          "name": "Perplexity account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Generate one original, engaging Facebook post using the provided idea.\n\nTailor each Facebook post to fit the entity’s persona, core messages, target audience, and communication style as described in the Entity Context.\n\nEnsure every Facebook post authentically reflects the entity’s voice and values.\n\nMaintain factual integrity: Do not include content based on unverifiable events or occurrences.\n\nDo not include the entity’s name, website (or any part of the website name), or any other identifying information related to the entity in any response. Write each Facebook post in first person.\n\nKeep the post less than 477 Characters and more than 250. \n\nEntity\n{{ $('Get a record1').item.json.EntitySummary }} {{ $('Get a record1').item.json.Persona }}  {{ $('Get a record1').item.json.CommunicationStyle }} {{ $('Get a record1').item.json.ExampleMessages }} {{ $('Get a record1').item.json['Target Audience'] }}\n{{ $('Get a record1').item.json.EntitySummary }}{{ $('Get a record1').item.json['Core Messages'] }}\nIdea\n{{ $json.output.Post }}",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.1,
+      "position": [
+        208,
+        -7124
+      ],
+      "id": "bdab6aca-7276-4cc6-9e5f-c54485c5b353",
+      "name": "Facebook",
+      "retryOnFail": true,
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Generate one original, engaging Warpcast post using the provided idea.\n\nTailor each Warpcast post to fit the entity’s persona, core messages, target audience, and communication style as described in the Entity Context.\n\nEnsure every Warpcast post authentically reflects the entity’s voice and values, delivering value, insight, or inspiration relevant to the day’s thematic guidance.\n\nKeep Warpcast posts concise and engaging, suitable for Warpcast's character limits  (320 characters or less) and best practices.\n\nMaintain factual integrity: Do not include content based on unverifiable events or occurrences.\n\nDoes not include the entity’s name, website (or any part of the website name), or any other identifying information related to the entity in any response. Write each Warpcast post in first person. \n\nEntity\n{{ $('Get a record1').item.json.EntitySummary }} {{ $('Get a record1').item.json.Persona }}  {{ $('Get a record1').item.json.CommunicationStyle }} {{ $('Get a record1').item.json.ExampleMessages }} {{ $('Get a record1').item.json['Target Audience'] }}\n{{ $('Get a record1').item.json.EntitySummary }}{{ $('Get a record1').item.json['Core Messages'] }}\nIdea\n{{ $json.output.Post }}",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.1,
+      "position": [
+        254,
+        -6516
+      ],
+      "id": "38c6c56d-a375-4643-8c5f-0d9615164969",
+      "name": "Warpcast1",
+      "retryOnFail": true,
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Generate one original, engaging tweet using the provided idea.\nDo not simply rephrase or slightly modify. \nTailor the tweet to fit the entity’s persona, core messages, target audience, and communication style as described in the Entity Context.\n\nEnsure the tweet idea authentically reflects the entity’s voice and values. \n\nKeep tweets concise and engaging, suitable for Twitter’s character limits  (280 characters or less) and best practices.\n\nMaintain factual integrity: Do not include content based on unverifiable events or occurrences.\n\nDoes not include the entity’s name, website (or any part of the website name), or any other identifying information related to the entity in any response. Write each tweet in first person.\n\nEntity\n{{ $('Get a record1').item.json.EntitySummary }} {{ $('Get a record1').item.json.Persona }}  {{ $('Get a record1').item.json.CommunicationStyle }} {{ $('Get a record1').item.json.ExampleMessages }} {{ $('Get a record1').item.json['Target Audience'] }}\n{{ $('Get a record1').item.json.EntitySummary }}{{ $('Get a record1').item.json['Core Messages'] }}\nIdea\n{{ $json.output.Post }}",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.1,
+      "position": [
+        254,
+        -6324
+      ],
+      "id": "c3f78d75-4a0a-4a03-a20b-4d08d2378873",
+      "name": "Twitter",
+      "retryOnFail": true,
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Always- use the Perplexity Search Tool as well as the Reddit search tool. Use Perplexity to identify the most suitable subreddit for the post. Use the Reddit search tool to get the 10 most recent posts from that subreddit. \n\nGenerate one original, engaging Reddit post using the provided ideas as creative inspiration.\n\nDo not simply rephrase or slightly modify.\n\nTailor each Reddit post to fit the entity’s persona, core messages, target audience, and communication style as described in the Entity Context.\n\nEnsure every Reddit post authentically reflects the entity’s voice and values.\n\nKeep Reddit posts concise and engaging, suitable for Reddit's character limits  (10,000 characters or less) and best practices.\n\nMaintain factual integrity: Do not include content based on unverifiable events or occurrences.\n\nDoes not include the entity’s name, website (or any part of the website name), or any other identifying information related to the entity in any response. Write each Reddit post in first person.\n\nEntity\n{{ $('Get a record1').item.json.EntitySummary }} {{ $('Get a record1').item.json.Persona }}  {{ $('Get a record1').item.json.CommunicationStyle }} {{ $('Get a record1').item.json.ExampleMessages }} {{ $('Get a record1').item.json['Target Audience'] }}\n{{ $('Get a record1').item.json.EntitySummary }}{{ $('Get a record1').item.json['Core Messages'] }}\nIdea\n{{ $json.output.Post }}",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.1,
+      "position": [
+        254,
+        -6132
+      ],
+      "id": "61e708e6-d058-4399-b5f6-28f2877af0a7",
+      "name": "Reddit",
+      "retryOnFail": true,
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n\t\"Title\": \"Generated Tile\",\n\t\"Post\": \"Generated Post\"\n}",
+        "autoFix": true
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        300,
+        -6900
+      ],
+      "id": "e311456d-82d9-4caa-be68-65abb319cee5",
+      "name": "Structured Output Parser1"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "Summarize the entirety of the information received from the API for news and keywords. ",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.1,
+      "position": [
+        -3120,
+        -10976
+      ],
+      "id": "4ca8d07b-2335-4bfa-bfff-9c8b76377770",
+      "name": "AI Agent",
+      "retryOnFail": true
+    },
+    {
+      "parameters": {
+        "url": "https://news-api14.p.rapidapi.com/v2/trendings?topic=Lifestyle&language=en",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-rapidapi-key",
+              "value": "a189e08327msh8bfba013b8f3a08p17ed33jsn0942ed6ab9be"
+            },
+            {
+              "name": "x-rapidapi-host",
+              "value": "news-api14.p.rapidapi.com"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        -3024,
+        -10752
+      ],
+      "id": "2ea5cea2-d068-4bb4-bb6a-96de561fcbe9",
+      "name": "LifestyleNews1"
+    },
+    {
+      "parameters": {
+        "model": "google/gemini-2.0-flash-001",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        -3068,
+        -13552
+      ],
+      "id": "06d7146e-f20f-4e01-847c-d50491db9ad9",
+      "name": "OpenRouter Chat Model",
+      "credentials": {
+        "openRouterApi": {
+          "id": "U0a4bg7KOjNgcIPy",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://news-api14.p.rapidapi.com/v2/trendings?topic=Technology&language=en",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-rapidapi-key",
+              "value": "a189e08327msh8bfba013b8f3a08p17ed33jsn0942ed6ab9be"
+            },
+            {
+              "name": "x-rapidapi-host",
+              "value": "news-api14.p.rapidapi.com"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        -3024,
+        -9952
+      ],
+      "id": "dc67b5d9-78d5-41f7-8d71-c696ab007a28",
+      "name": "TechnologyNews4"
+    },
+    {
+      "parameters": {
+        "url": "https://news-api14.p.rapidapi.com/v2/trendings?topic=Environment&language=en",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-rapidapi-key",
+              "value": "a189e08327msh8bfba013b8f3a08p17ed33jsn0942ed6ab9be"
+            },
+            {
+              "name": "x-rapidapi-host",
+              "value": "news-api14.p.rapidapi.com"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        -3024,
+        -8352
+      ],
+      "id": "842bd58e-5118-40db-b89a-582e34d228f9",
+      "name": "EnvironmentNews2"
+    },
+    {
+      "parameters": {
+        "url": "https://news-api14.p.rapidapi.com/v2/trendings?topic=Science&language=en",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-rapidapi-key",
+              "value": "a189e08327msh8bfba013b8f3a08p17ed33jsn0942ed6ab9be"
+            },
+            {
+              "name": "x-rapidapi-host",
+              "value": "news-api14.p.rapidapi.com"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        -3024,
+        -9152
+      ],
+      "id": "4df9e9f5-422e-4436-9c20-1ffcabe1f7e0",
+      "name": "ScienceNews3"
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n\t\"news\": \"summarization of news stories\",\n\t\"keywords\": \"list of keywords\"\n}",
+        "autoFix": true
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        -3008,
+        -13760
+      ],
+      "id": "edb0883c-fd89-4b55-914f-a62d0098f603",
+      "name": "Structured Output Parser"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "Summarize the entirety of the information received from the API for news and keywords. ",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.1,
+      "position": [
+        -3120,
+        -9376
+      ],
+      "id": "21a5b02f-f99e-4e5e-8655-bfdf84d8b159",
+      "name": "AI Agent2",
+      "retryOnFail": true
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "Summarize the entirety of the information received from the API for news and keywords. ",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.1,
+      "position": [
+        -3120,
+        -8576
+      ],
+      "id": "c170372e-32ef-4d22-b729-b8b7a2770bc5",
+      "name": "AI Agent3",
+      "retryOnFail": true
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "Summarize the entirety of the information received from the API for news and keywords. ",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.1,
+      "position": [
+        -3120,
+        -7776
+      ],
+      "id": "cca94d8c-409a-42ac-9bad-a66072ecb8b4",
+      "name": "AI Agent4",
+      "retryOnFail": true
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "Summarize the entirety of the information received from the API for news and keywords. ",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.1,
+      "position": [
+        -3120,
+        -6976
+      ],
+      "id": "cb10bb76-6eab-4c5b-a79d-e9520a9548ee",
+      "name": "AI Agent5",
+      "retryOnFail": true
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "Summarize the entirety of the information received from the API for news and keywords. ",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.1,
+      "position": [
+        -3120,
+        -6176
+      ],
+      "id": "a271d184-0862-4f56-8418-a5ecf72adc80",
+      "name": "AI Agent6",
+      "retryOnFail": true
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "Summarize the entirety of the information received from the API for news and keywords. ",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.1,
+      "position": [
+        -3120,
+        -5776
+      ],
+      "id": "a5ba951d-af55-4ccd-991f-036146ef59ee",
+      "name": "AI Agent7",
+      "retryOnFail": true
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "Summarize the entirety of the information received from the API for news and keywords. ",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.1,
+      "position": [
+        -3120,
+        -4976
+      ],
+      "id": "0bbcb45b-d32d-4569-b23c-7babbb962c97",
+      "name": "AI Agent8",
+      "retryOnFail": true
+    },
+    {
+      "parameters": {
+        "url": "https://news-api14.p.rapidapi.com/v2/trendings?topic=Startup&language=en",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-rapidapi-key",
+              "value": "a189e08327msh8bfba013b8f3a08p17ed33jsn0942ed6ab9be"
+            },
+            {
+              "name": "x-rapidapi-host",
+              "value": "news-api14.p.rapidapi.com"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        -3024,
+        -7552
+      ],
+      "id": "37de73a7-cfee-48a0-89b9-5260e34a2695",
+      "name": "StartupNews3"
+    },
+    {
+      "parameters": {
+        "url": "https://news-api14.p.rapidapi.com/v2/trendings?topic=Business&language=en",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-rapidapi-key",
+              "value": "a189e08327msh8bfba013b8f3a08p17ed33jsn0942ed6ab9be"
+            },
+            {
+              "name": "x-rapidapi-host",
+              "value": "news-api14.p.rapidapi.com"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        -3024,
+        -6752
+      ],
+      "id": "7b7be6c0-c09d-4b63-a9e5-d6cbdb1ab277",
+      "name": "BusinessNews4"
+    },
+    {
+      "parameters": {
+        "url": "https://news-api14.p.rapidapi.com/v2/trendings?topic=Economy&language=en",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-rapidapi-key",
+              "value": "a189e08327msh8bfba013b8f3a08p17ed33jsn0942ed6ab9be"
+            },
+            {
+              "name": "x-rapidapi-host",
+              "value": "news-api14.p.rapidapi.com"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        -3024,
+        -5952
+      ],
+      "id": "7b51f985-e547-4c21-9b69-d20fe06d42a9",
+      "name": "EconomyNews5"
+    },
+    {
+      "parameters": {
+        "url": "https://news-api14.p.rapidapi.com/v2/trendings?topic=Technology&language=en",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-rapidapi-key",
+              "value": "a189e08327msh8bfba013b8f3a08p17ed33jsn0942ed6ab9be"
+            },
+            {
+              "name": "x-rapidapi-host",
+              "value": "news-api14.p.rapidapi.com"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        -3024,
+        -5552
+      ],
+      "id": "e1b1c075-c15c-4001-923c-d7902d02090a",
+      "name": "TechnologyNews6"
+    },
+    {
+      "parameters": {
+        "url": "https://news-api14.p.rapidapi.com/v2/trendings?topic=Finance&language=en",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-rapidapi-key",
+              "value": "a189e08327msh8bfba013b8f3a08p17ed33jsn0942ed6ab9be"
+            },
+            {
+              "name": "x-rapidapi-host",
+              "value": "news-api14.p.rapidapi.com"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        -3024,
+        -4752
+      ],
+      "id": "e494be5c-54db-45c4-aaa9-e1aaccaa5528",
+      "name": "FinanceNews7"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "Summarize the entirety of the information received from the API for news and keywords.",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.1,
+      "position": [
+        -3232,
+        -13984
+      ],
+      "id": "775c46df-dd1d-4188-9d37-50a4d9d1a053",
+      "name": "AI Agent9",
+      "retryOnFail": true
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "Summarize the entirety of the information received from the API for news and keywords. ",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.1,
+      "position": [
+        -3120,
+        -13376
+      ],
+      "id": "d565ebc1-1378-4179-9a2e-5481f9382404",
+      "name": "AI Agent10",
+      "retryOnFail": true
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "Summarize the entirety of the information received from the API for news and keywords. ",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.1,
+      "position": [
+        -3120,
+        -12976
+      ],
+      "id": "748e1c75-fa2d-4a8c-acb5-28a4ac8d01b5",
+      "name": "AI Agent11",
+      "retryOnFail": true
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "Summarize the entirety of the information received from the API for news and keywords. ",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.1,
+      "position": [
+        -3120,
+        -12576
+      ],
+      "id": "04c86f87-2475-4955-b73b-132307c863c3",
+      "name": "AI Agent12",
+      "retryOnFail": true
+    },
+    {
+      "parameters": {
+        "url": "https://news-api14.p.rapidapi.com/v2/trendings?topic=Energy&language=en",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-rapidapi-key",
+              "value": "a189e08327msh8bfba013b8f3a08p17ed33jsn0942ed6ab9be"
+            },
+            {
+              "name": "x-rapidapi-host",
+              "value": "news-api14.p.rapidapi.com"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        -3136,
+        -13760
+      ],
+      "id": "0288d891-99c2-4418-922f-2aa9da81f6ad",
+      "name": "EnergyNews"
+    },
+    {
+      "parameters": {
+        "url": "https://news-api14.p.rapidapi.com/v2/trendings?topic=Technology&language=en",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-rapidapi-key",
+              "value": "a189e08327msh8bfba013b8f3a08p17ed33jsn0942ed6ab9be"
+            },
+            {
+              "name": "x-rapidapi-host",
+              "value": "news-api14.p.rapidapi.com"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        -3024,
+        -13152
+      ],
+      "id": "2c5b4cf3-dced-43c2-a9ca-39a8a2485ad8",
+      "name": "TechnologyNews1"
+    },
+    {
+      "parameters": {
+        "url": "https://news-api14.p.rapidapi.com/v2/trendings?topic=Markets&language=en",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-rapidapi-key",
+              "value": "a189e08327msh8bfba013b8f3a08p17ed33jsn0942ed6ab9be"
+            },
+            {
+              "name": "x-rapidapi-host",
+              "value": "news-api14.p.rapidapi.com"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        -3024,
+        -12352
+      ],
+      "id": "ab1d41af-00c4-4b78-8741-4c0da938c8d1",
+      "name": "MarketsNews3"
+    },
+    {
+      "parameters": {
+        "url": "https://news-api14.p.rapidapi.com/v2/trendings?topic=Cryptocurrency&language=en",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-rapidapi-key",
+              "value": "a189e08327msh8bfba013b8f3a08p17ed33jsn0942ed6ab9be"
+            },
+            {
+              "name": "x-rapidapi-host",
+              "value": "news-api14.p.rapidapi.com"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        -3024,
+        -12752
+      ],
+      "id": "d4d37bd6-7bb0-4492-a470-ea0d59170ff5",
+      "name": "CryptocurrencyNews2"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "Summarize the entirety of the information received from the API for news and keywords. ",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.1,
+      "position": [
+        -3120,
+        -12176
+      ],
+      "id": "81c0570d-5dc4-4b02-ae8f-0353d83f95bd",
+      "name": "AI Agent13",
+      "retryOnFail": true
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "Summarize the entirety of the information received from the API for news and keywords. ",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.1,
+      "position": [
+        -3120,
+        -9776
+      ],
+      "id": "2004b4fd-8720-4421-b442-2b6d9840128a",
+      "name": "AI Agent14",
+      "retryOnFail": true
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "Summarize the entirety of the information received from the API for news and keywords. ",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.1,
+      "position": [
+        -3120,
+        -11776
+      ],
+      "id": "deade39f-890c-4571-bc83-186a59acadd9",
+      "name": "AI Agent15",
+      "retryOnFail": true
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "Summarize the entirety of the information received from the API for news and keywords. ",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.1,
+      "position": [
+        -3120,
+        -8176
+      ],
+      "id": "f2b7089a-f240-4ba5-bf04-d2a49f52117e",
+      "name": "AI Agent16",
+      "retryOnFail": true
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "Summarize the entirety of the information received from the API for news and keywords. ",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.1,
+      "position": [
+        -3120,
+        -10576
+      ],
+      "id": "87890ac9-c7e8-467a-9d41-0756c3e290f0",
+      "name": "AI Agent17",
+      "retryOnFail": true
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "Summarize the entirety of the information received from the API for news and keywords. ",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.1,
+      "position": [
+        -3120,
+        -8976
+      ],
+      "id": "50be787d-115a-4423-8f0b-896394c34c8c",
+      "name": "AI Agent18",
+      "retryOnFail": true
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "Summarize the entirety of the information received from the API for news and keywords. ",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.1,
+      "position": [
+        -3120,
+        -11376
+      ],
+      "id": "343c0987-6de4-4459-98be-1f8ac8a888d0",
+      "name": "AI Agent19",
+      "retryOnFail": true
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "Summarize the entirety of the information received from the API for news and keywords. ",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.1,
+      "position": [
+        -3120,
+        -7376
+      ],
+      "id": "cd3f3032-65e0-41ab-84a8-8fb02bb057ba",
+      "name": "AI Agent20",
+      "retryOnFail": true
+    },
+    {
+      "parameters": {
+        "url": "https://real-time-news-data.p.rapidapi.com/local-headlines?query=Cape%20Town&country=ZA&lang=en&limit=10",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-rapidapi-key",
+              "value": "a189e08327msh8bfba013b8f3a08p17ed33jsn0942ed6ab9be"
+            },
+            {
+              "name": "x-rapidapi-host",
+              "value": "real-time-news-data.p.rapidapi.com"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        -3024,
+        -11152
+      ],
+      "id": "42e79126-46b2-452d-8e06-72c3e3129e31",
+      "name": "CapetownNews4"
+    },
+    {
+      "parameters": {
+        "url": "https://real-time-news-data.p.rapidapi.com/local-headlines?query=New%20York&country=US&lang=en&limit=10",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-rapidapi-key",
+              "value": "a189e08327msh8bfba013b8f3a08p17ed33jsn0942ed6ab9be"
+            },
+            {
+              "name": "x-rapidapi-host",
+              "value": "real-time-news-data.p.rapidapi.com"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        -3024,
+        -7152
+      ],
+      "id": "5f1d3253-5db4-4314-8a9a-559245a963d6",
+      "name": "NYNews"
+    },
+    {
+      "parameters": {
+        "url": "https://real-time-news-data.p.rapidapi.com/local-headlines?query=Toronto&country=CA&lang=en&limit=10",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-rapidapi-key",
+              "value": "a189e08327msh8bfba013b8f3a08p17ed33jsn0942ed6ab9be"
+            },
+            {
+              "name": "x-rapidapi-host",
+              "value": "real-time-news-data.p.rapidapi.com"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        -3024,
+        -8752
+      ],
+      "id": "3bc06774-2842-4eef-b726-c743d8becd64",
+      "name": "TorontoNews5"
+    },
+    {
+      "parameters": {
+        "url": "https://real-time-news-data.p.rapidapi.com/local-headlines?query=San%20Francisco&country=US&lang=en&limit=10",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-rapidapi-key",
+              "value": "a189e08327msh8bfba013b8f3a08p17ed33jsn0942ed6ab9be"
+            },
+            {
+              "name": "x-rapidapi-host",
+              "value": "real-time-news-data.p.rapidapi.com"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        -3024,
+        -10352
+      ],
+      "id": "4309ac48-67ec-412f-bff1-62a43b30c534",
+      "name": "SFNews6"
+    },
+    {
+      "parameters": {
+        "url": "https://real-time-news-data.p.rapidapi.com/local-headlines?query=London&country=GB&lang=en&limit=10",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-rapidapi-key",
+              "value": "a189e08327msh8bfba013b8f3a08p17ed33jsn0942ed6ab9be"
+            },
+            {
+              "name": "x-rapidapi-host",
+              "value": "real-time-news-data.p.rapidapi.com"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        -3024,
+        -11552
+      ],
+      "id": "6d45485f-62fd-4d2f-80fd-527f7fcba340",
+      "name": "LondonNews8"
+    },
+    {
+      "parameters": {
+        "url": "https://real-time-news-data.p.rapidapi.com/local-headlines?query=Sydney&country=AU&lang=en&limit=10",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-rapidapi-key",
+              "value": "a189e08327msh8bfba013b8f3a08p17ed33jsn0942ed6ab9be"
+            },
+            {
+              "name": "x-rapidapi-host",
+              "value": "real-time-news-data.p.rapidapi.com"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        -3024,
+        -7952
+      ],
+      "id": "81f45d26-bec0-46e3-84e1-dca53e40a235",
+      "name": "SydneyNews7"
+    },
+    {
+      "parameters": {
+        "url": "https://real-time-news-data.p.rapidapi.com/local-headlines?query=Vancouver&country=CA&lang=en&limit=10",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-rapidapi-key",
+              "value": "a189e08327msh8bfba013b8f3a08p17ed33jsn0942ed6ab9be"
+            },
+            {
+              "name": "x-rapidapi-host",
+              "value": "real-time-news-data.p.rapidapi.com"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        -3024,
+        -11952
+      ],
+      "id": "31d804ed-c5f0-4501-903b-3782cf94ce18",
+      "name": "VancouverNews9"
+    },
+    {
+      "parameters": {
+        "url": "https://real-time-news-data.p.rapidapi.com/local-headlines?query=Auckland&country=NZ&lang=en&limit=10",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-rapidapi-key",
+              "value": "a189e08327msh8bfba013b8f3a08p17ed33jsn0942ed6ab9be"
+            },
+            {
+              "name": "x-rapidapi-host",
+              "value": "real-time-news-data.p.rapidapi.com"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        -3024,
+        -9552
+      ],
+      "id": "86f80260-eb09-4ddb-8fe4-6cc4cab99cb4",
+      "name": "AucklandNews10"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "Summarize the entirety of the information received from the API for news and keywords. ",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.1,
+      "position": [
+        -3120,
+        -6576
+      ],
+      "id": "1af680ff-d80c-46c0-863c-bd404ed9fb94",
+      "name": "AI Agent21",
+      "retryOnFail": true
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "Summarize the entirety of the information received from the API for news and keywords. ",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.1,
+      "position": [
+        -3120,
+        -4576
+      ],
+      "id": "0be36478-e238-458e-bc47-7da75c9a3caf",
+      "name": "AI Agent22",
+      "retryOnFail": true
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "Summarize the entirety of the information received from the API for news and keywords. ",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.1,
+      "position": [
+        -3120,
+        -5376
+      ],
+      "id": "0bc2b5bf-998a-481b-b913-9d5391389031",
+      "name": "AI Agent23",
+      "retryOnFail": true
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "Summarize the entirety of the information received from the API for news and keywords. ",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.1,
+      "position": [
+        -3120,
+        -4176
+      ],
+      "id": "ece7492a-cdec-418c-89c3-c1d9cd2500af",
+      "name": "AI Agent24",
+      "retryOnFail": true
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "Summarize the entirety of the information received from the API for news and keywords. ",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.1,
+      "position": [
+        -3120,
+        -3776
+      ],
+      "id": "cd52c319-59f4-4b31-aadb-ff73f56a80f1",
+      "name": "AI Agent25",
+      "retryOnFail": true
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "Summarize the entirety of the information received from the API for news and keywords. ",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.1,
+      "position": [
+        -3120,
+        -3584
+      ],
+      "id": "b22b3223-490a-4910-9f73-9256730ef000",
+      "name": "AI Agent26",
+      "retryOnFail": true
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "Summarize the entirety of the information received from the API for news and keywords. ",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.1,
+      "position": [
+        -3120,
+        -3184
+      ],
+      "id": "b6fcca5b-5e62-449e-ac63-0de1a5748608",
+      "name": "AI Agent27",
+      "retryOnFail": true
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "Summarize the entirety of the information received from the API for news and keywords. ",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.1,
+      "position": [
+        -3120,
+        -2784
+      ],
+      "id": "c86d96ba-d568-4690-93b8-7fb5986156e4",
+      "name": "AI Agent28",
+      "retryOnFail": true
+    },
+    {
+      "parameters": {
+        "url": "https://real-time-news-data.p.rapidapi.com/topic-news-by-section?topic=TECHNOLOGY&section=CAQiSkNCQVNNUW9JTDIwdk1EZGpNWFlTQldWdUxVZENHZ0pKVENJT0NBUWFDZ29JTDIwdk1ETnliSFFxQ2hJSUwyMHZNRE55YkhRb0FBKi4IACoqCAoiJENCQVNGUW9JTDIwdk1EZGpNWFlTQldWdUxVZENHZ0pKVENnQVABUAE&limit=10&country=US&lang=en",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-rapidapi-key",
+              "value": "a189e08327msh8bfba013b8f3a08p17ed33jsn0942ed6ab9be"
+            },
+            {
+              "name": "x-rapidapi-host",
+              "value": "real-time-news-data.p.rapidapi.com"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        -3024,
+        -6352
+      ],
+      "id": "35cfad26-e58a-4a19-b3ed-2c82773253f2",
+      "name": "TopTechNews2"
+    },
+    {
+      "parameters": {
+        "url": "https://twitter241.p.rapidapi.com/trends-by-location?woeid=2487956",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-rapidapi-key",
+              "value": "a189e08327msh8bfba013b8f3a08p17ed33jsn0942ed6ab9be"
+            },
+            {
+              "name": "x-rapidapi-host",
+              "value": "twitter241.p.rapidapi.com"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        -3024,
+        -4352
+      ],
+      "id": "b49dee30-329b-48f3-b645-c2dd9a9d3eac",
+      "name": "NYTwitterTrends4"
+    },
+    {
+      "parameters": {
+        "url": "https://twitter241.p.rapidapi.com/trends-by-location?woeid=1940345",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-rapidapi-key",
+              "value": "a189e08327msh8bfba013b8f3a08p17ed33jsn0942ed6ab9be"
+            },
+            {
+              "name": "x-rapidapi-host",
+              "value": "twitter241.p.rapidapi.com"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        -3024,
+        -5152
+      ],
+      "id": "137a477b-3d06-414b-970d-491387eecbd7",
+      "name": "DubaiTwitterTrends1"
+    },
+    {
+      "parameters": {
+        "url": "https://twitter241.p.rapidapi.com/trends-by-location?woeid=44418",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-rapidapi-key",
+              "value": "a189e08327msh8bfba013b8f3a08p17ed33jsn0942ed6ab9be"
+            },
+            {
+              "name": "x-rapidapi-host",
+              "value": "twitter241.p.rapidapi.com"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        -3024,
+        -3952
+      ],
+      "id": "2519deeb-0650-4e53-a569-b42b4d691f29",
+      "name": "LondonTwitterTrends"
+    },
+    {
+      "parameters": {
+        "url": "https://twitter241.p.rapidapi.com/trends-by-location?woeid=2450022",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-rapidapi-key",
+              "value": "a189e08327msh8bfba013b8f3a08p17ed33jsn0942ed6ab9be"
+            },
+            {
+              "name": "x-rapidapi-host",
+              "value": "twitter241.p.rapidapi.com"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        -3024,
+        -3360
+      ],
+      "id": "51fbd1ca-5289-481e-87c3-e558e4488352",
+      "name": "SFTwitterTrends5"
+    },
+    {
+      "parameters": {
+        "url": "https://twitter241.p.rapidapi.com/trends-by-location?woeid=2459115",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-rapidapi-key",
+              "value": "a189e08327msh8bfba013b8f3a08p17ed33jsn0942ed6ab9be"
+            },
+            {
+              "name": "x-rapidapi-host",
+              "value": "twitter241.p.rapidapi.com"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        -3024,
+        -2960
+      ],
+      "id": "28f312b0-3e9d-49e6-abcc-8183fd9dfdab",
+      "name": "LATwitterTrends3"
+    },
+    {
+      "parameters": {
+        "url": "https://seeking-alpha.p.rapidapi.com/articles/v2/list-trending?size=40",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-rapidapi-key",
+              "value": "a189e08327msh8bfba013b8f3a08p17ed33jsn0942ed6ab9be"
+            },
+            {
+              "name": "x-rapidapi-host",
+              "value": "twitter241.p.rapidapi.com"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        -3024,
+        -2560
+      ],
+      "id": "3c778918-c25d-43bb-bbb0-3a440aa6b8de",
+      "name": "TrendingSeekingAlpha1"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "Summarize the entirety of the information received from the API for news and keywords. ",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.1,
+      "position": [
+        -3120,
+        -1584
+      ],
+      "id": "8cf860fd-4be9-4570-be61-5ec68992a7f9",
+      "name": "AI Agent29",
+      "retryOnFail": true
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "Summarize the entirety of the information received from the API for news and keywords. ",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.1,
+      "position": [
+        -3120,
+        -1184
+      ],
+      "id": "4b134145-f2b8-4338-89b5-4cd9c8427a9a",
+      "name": "AI Agent30",
+      "retryOnFail": true
+    },
+    {
+      "parameters": {
+        "url": "https://seeking-alpha.p.rapidapi.com/news/v2/list-trending?size=40",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-rapidapi-key",
+              "value": "a189e08327msh8bfba013b8f3a08p17ed33jsn0942ed6ab9be"
+            },
+            {
+              "name": "x-rapidapi-host",
+              "value": "twitter241.p.rapidapi.com"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        -3024,
+        -1360
+      ],
+      "id": "f561023b-d7f3-4a27-b69d-661a095f58bb",
+      "name": "NewsTrendingSeekingAlpha"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "Summarize the entirety of the information received from the API for news and keywords. ",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.1,
+      "position": [
+        -3120,
+        -2384
+      ],
+      "id": "39d27dbe-146a-4b03-aee7-7f351b7701d7",
+      "name": "AI Agent31",
+      "retryOnFail": true
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "Summarize the entirety of the information received from the API for news and keywords. ",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.1,
+      "position": [
+        -3120,
+        -1984
+      ],
+      "id": "c0a6924b-d9e2-412d-a085-2a35224eb838",
+      "name": "AI Agent32",
+      "retryOnFail": true
+    },
+    {
+      "parameters": {
+        "url": "https://twitter241.p.rapidapi.com/trends-by-location?woeid=2348079",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-rapidapi-key",
+              "value": "a189e08327msh8bfba013b8f3a08p17ed33jsn0942ed6ab9be"
+            },
+            {
+              "name": "x-rapidapi-host",
+              "value": "twitter241.p.rapidapi.com"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        -3024,
+        -2160
+      ],
+      "id": "0a6a0b96-056a-4a3b-8851-2fe571c235a6",
+      "name": "AucklandTwitterTrends1"
+    },
+    {
+      "parameters": {
+        "url": "https://twitter241.p.rapidapi.com/trends-by-location?woeid=2391279",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-rapidapi-key",
+              "value": "a189e08327msh8bfba013b8f3a08p17ed33jsn0942ed6ab9be"
+            },
+            {
+              "name": "x-rapidapi-host",
+              "value": "twitter241.p.rapidapi.com"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        -3024,
+        -1760
+      ],
+      "id": "f3894727-2f9a-45eb-8406-e823829c37e6",
+      "name": "DenverTwitterTrends6"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "Summarize the entirety of the information received from the API for news and keywords. ",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.1,
+      "position": [
+        -3120,
+        -784
+      ],
+      "id": "a4ffe17d-631c-433f-ae9b-fb743b2bd569",
+      "name": "AI Agent33",
+      "retryOnFail": true
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "Summarize the entirety of the information received from the API for news and keywords. ",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.1,
+      "position": [
+        -3120,
+        -384
+      ],
+      "id": "48b5dd44-e865-4aec-9e6a-92ada14a3a79",
+      "name": "AI Agent34",
+      "retryOnFail": true
+    },
+    {
+      "parameters": {
+        "url": "https://crypto-news51.p.rapidapi.com/api/v1/crypto/articles?page=1&limit=10&time_frame=24h&format=json",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-rapidapi-key",
+              "value": "a189e08327msh8bfba013b8f3a08p17ed33jsn0942ed6ab9be"
+            },
+            {
+              "name": "x-rapidapi-host",
+              "value": "crypto-news51.p.rapidapi.com"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        -3024,
+        -960
+      ],
+      "id": "08c439eb-92d1-4b8a-89e9-7f584645b011",
+      "name": "CryptoNews1"
+    },
+    {
+      "parameters": {
+        "url": "https://crypto-news51.p.rapidapi.com/api/v1/crypto/sentiment?interval=1d",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-rapidapi-key",
+              "value": "a189e08327msh8bfba013b8f3a08p17ed33jsn0942ed6ab9be"
+            },
+            {
+              "name": "x-rapidapi-host",
+              "value": "crypto-news51.p.rapidapi.com"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        -3024,
+        -560
+      ],
+      "id": "e5576cda-54cb-4bfd-820f-56de5a815fd4",
+      "name": "SentimentNews2"
+    },
+    {
+      "parameters": {
+        "url": "https://tiktok-api23.p.rapidapi.com/api/search/general?keyword=cat&cursor=0&search_id=0",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-rapidapi-key",
+              "value": "a189e08327msh8bfba013b8f3a08p17ed33jsn0942ed6ab9be"
+            },
+            {
+              "name": "x-rapidapi-host",
+              "value": "tiktok-api23.p.rapidapi.com"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        -3024,
+        -160
+      ],
+      "id": "c4afb927-5249-4866-a142-ce3f643665a7",
+      "name": "TopTikTok"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "Summarize the entirety of the information received from the API for news and keywords. ",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.1,
+      "position": [
+        -3120,
+        16
+      ],
+      "id": "e4c07f3a-73df-49d9-990d-ebd89af67223",
+      "name": "AI Agent35",
+      "retryOnFail": true
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "Summarize the entirety of the information received from the API for news and keywords. ",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.1,
+      "position": [
+        -3120,
+        416
+      ],
+      "id": "1b21aa0c-59d0-4627-817a-19cc680efa15",
+      "name": "AI Agent36",
+      "retryOnFail": true
+    },
+    {
+      "parameters": {
+        "url": "https://tiktok-api23.p.rapidapi.com/api/post/trending?count=10",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-rapidapi-key",
+              "value": "a189e08327msh8bfba013b8f3a08p17ed33jsn0942ed6ab9be"
+            },
+            {
+              "name": "x-rapidapi-host",
+              "value": "tiktok-api23.p.rapidapi.com"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        -3024,
+        240
+      ],
+      "id": "bf982b2f-2c2b-4dd4-b778-50441bad6c5c",
+      "name": "TrendingTikTok1"
+    },
+    {
+      "parameters": {
+        "url": "https://google-realtime-trends-data-api.p.rapidapi.com/trends",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-rapidapi-key",
+              "value": "a189e08327msh8bfba013b8f3a08p17ed33jsn0942ed6ab9be"
+            },
+            {
+              "name": "x-rapidapi-host",
+              "value": "data-api.p.rapidapi.com"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        -3024,
+        640
+      ],
+      "id": "54c597cb-60d1-4450-8db0-3d398d17fbcc",
+      "name": "GlobalTrends1"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "Summarize the entirety of the information received from the API for news and keywords. ",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.1,
+      "position": [
+        -3120,
+        920
+      ],
+      "id": "61b0f9b1-c334-4388-8add-ef2ef0a3b7e9",
+      "name": "AI Agent37",
+      "retryOnFail": true
+    },
+    {
+      "parameters": {
+        "url": "https://crypto-news51.p.rapidapi.com/api/v1/crypto/sentiment?interval=1d",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-rapidapi-key",
+              "value": "a189e08327msh8bfba013b8f3a08p17ed33jsn0942ed6ab9be"
+            },
+            {
+              "name": "x-rapidapi-host",
+              "value": "crypto-news51.p.rapidapi.com"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        -3024,
+        1144
+      ],
+      "id": "efce02cf-5381-49f3-88e2-5742bde2ec9e",
+      "name": "SentimentCrypto1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "cedc60aa-5d5d-4c41-9339-1db7e9159589",
+              "name": "EnergyNews",
+              "value": "={{ $json.output.news }}",
+              "type": "string"
+            },
+            {
+              "id": "e0ad62d9-1ba3-48f0-a38e-13768a6c5290",
+              "name": "EnergyKeywords",
+              "value": "={{ $json.output.keywords }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -2608,
+        -13776
+      ],
+      "id": "cf22b3ca-f6b6-4e1c-adcc-bffc6c4ad664",
+      "name": "Edit Fields2"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        -2384,
+        -13324
+      ],
+      "id": "9f48b1c9-bf4a-4194-b24b-a7deada337ac",
+      "name": "Merge4"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "cedc60aa-5d5d-4c41-9339-1db7e9159589",
+              "name": "TechnologyNews",
+              "value": "={{ $json.output.news }}",
+              "type": "string"
+            },
+            {
+              "id": "e0ad62d9-1ba3-48f0-a38e-13768a6c5290",
+              "name": "TechnologyKeywords",
+              "value": "={{ $json.output.keywords }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -2608,
+        -13272
+      ],
+      "id": "fe0824d5-cf3c-4584-a8e5-2274cbfaea07",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "cedc60aa-5d5d-4c41-9339-1db7e9159589",
+              "name": "CryptoNews",
+              "value": "={{ $json.output.news }}",
+              "type": "string"
+            },
+            {
+              "id": "e0ad62d9-1ba3-48f0-a38e-13768a6c5290",
+              "name": "CryptoKeywords",
+              "value": "={{ $json.output.keywords }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -2608,
+        -12872
+      ],
+      "id": "95650d56-ed25-476e-a602-3fb19245e436",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "cedc60aa-5d5d-4c41-9339-1db7e9159589",
+              "name": "MarketsNews",
+              "value": "={{ $json.output.news }}",
+              "type": "string"
+            },
+            {
+              "id": "e0ad62d9-1ba3-48f0-a38e-13768a6c5290",
+              "name": "MarketsKeywords",
+              "value": "={{ $json.output.keywords }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -2608,
+        -12472
+      ],
+      "id": "18527652-73e4-4ff0-ab40-20a1502654b6",
+      "name": "Edit Fields3"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "cedc60aa-5d5d-4c41-9339-1db7e9159589",
+              "name": "VancouverNews",
+              "value": "={{ $json.output.news }}",
+              "type": "string"
+            },
+            {
+              "id": "e0ad62d9-1ba3-48f0-a38e-13768a6c5290",
+              "name": "VancouverKeywords",
+              "value": "={{ $json.output.keywords }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -2608,
+        -12072
+      ],
+      "id": "5ee1bf1c-aa7f-4043-99d2-3c6a49099256",
+      "name": "Edit Fields4"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "cedc60aa-5d5d-4c41-9339-1db7e9159589",
+              "name": "LondonNews",
+              "value": "={{ $json.output.news }}",
+              "type": "string"
+            },
+            {
+              "id": "e0ad62d9-1ba3-48f0-a38e-13768a6c5290",
+              "name": "LondonKeywords",
+              "value": "={{ $json.output.keywords }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -2608,
+        -11672
+      ],
+      "id": "8de03713-f708-4d86-a470-3200afb20db0",
+      "name": "Edit Fields5"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "cedc60aa-5d5d-4c41-9339-1db7e9159589",
+              "name": "CapeTownNews",
+              "value": "={{ $json.output.news }}",
+              "type": "string"
+            },
+            {
+              "id": "e0ad62d9-1ba3-48f0-a38e-13768a6c5290",
+              "name": "CapetownKeywords",
+              "value": "={{ $json.output.keywords }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -2608,
+        -11272
+      ],
+      "id": "38559458-554b-4fbe-9b33-dbf26de9db4a",
+      "name": "Edit Fields6"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "cedc60aa-5d5d-4c41-9339-1db7e9159589",
+              "name": "LifestyleNews",
+              "value": "={{ $json.output.news }}",
+              "type": "string"
+            },
+            {
+              "id": "e0ad62d9-1ba3-48f0-a38e-13768a6c5290",
+              "name": "LifestyleKeywords",
+              "value": "={{ $json.output.keywords }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -2608,
+        -10872
+      ],
+      "id": "0fa70733-f656-4bac-9437-3955d8c43f38",
+      "name": "Edit Fields7"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "cedc60aa-5d5d-4c41-9339-1db7e9159589",
+              "name": "SFNews",
+              "value": "={{ $json.output.news }}",
+              "type": "string"
+            },
+            {
+              "id": "e0ad62d9-1ba3-48f0-a38e-13768a6c5290",
+              "name": "SFKeywords",
+              "value": "={{ $json.output.keywords }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -2608,
+        -10472
+      ],
+      "id": "437c6568-a38b-4134-853f-e73bb557fea4",
+      "name": "Edit Fields8"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "cedc60aa-5d5d-4c41-9339-1db7e9159589",
+              "name": "TechNews",
+              "value": "={{ $json.output.news }}",
+              "type": "string"
+            },
+            {
+              "id": "e0ad62d9-1ba3-48f0-a38e-13768a6c5290",
+              "name": "TechKeywords",
+              "value": "={{ $json.output.keywords }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -2608,
+        -10072
+      ],
+      "id": "9bbd8409-ef74-415f-b76a-f42a25274ae2",
+      "name": "Edit Fields9"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "cedc60aa-5d5d-4c41-9339-1db7e9159589",
+              "name": "AucklandNews",
+              "value": "={{ $json.output.news }}",
+              "type": "string"
+            },
+            {
+              "id": "e0ad62d9-1ba3-48f0-a38e-13768a6c5290",
+              "name": "AucklandKeywords",
+              "value": "={{ $json.output.keywords }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -2608,
+        -9672
+      ],
+      "id": "bb5d5e52-99e7-479a-9a1d-eb918408d965",
+      "name": "Edit Fields10"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "cedc60aa-5d5d-4c41-9339-1db7e9159589",
+              "name": "ScienceNews",
+              "value": "={{ $json.output.news }}",
+              "type": "string"
+            },
+            {
+              "id": "e0ad62d9-1ba3-48f0-a38e-13768a6c5290",
+              "name": "ScienceKeywords",
+              "value": "={{ $json.output.keywords }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -2608,
+        -9272
+      ],
+      "id": "a724d91f-8a39-4f6a-9ec9-5b932a5d2021",
+      "name": "Edit Fields11"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "cedc60aa-5d5d-4c41-9339-1db7e9159589",
+              "name": "TorontoNews",
+              "value": "={{ $json.output.news }}",
+              "type": "string"
+            },
+            {
+              "id": "e0ad62d9-1ba3-48f0-a38e-13768a6c5290",
+              "name": "TorontoKeywords",
+              "value": "={{ $json.output.keywords }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -2608,
+        -8872
+      ],
+      "id": "1bd39bd3-01a3-4c08-bd87-5367079890f8",
+      "name": "Edit Fields12"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "cedc60aa-5d5d-4c41-9339-1db7e9159589",
+              "name": "ENVNews",
+              "value": "={{ $json.output.news }}",
+              "type": "string"
+            },
+            {
+              "id": "e0ad62d9-1ba3-48f0-a38e-13768a6c5290",
+              "name": "ENVKeywords",
+              "value": "={{ $json.output.keywords }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -2608,
+        -8472
+      ],
+      "id": "79ceb301-bebb-4b8e-8a9c-ef1a2fc3ab3c",
+      "name": "Edit Fields13"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "cedc60aa-5d5d-4c41-9339-1db7e9159589",
+              "name": "SydneyNews",
+              "value": "={{ $json.output.news }}",
+              "type": "string"
+            },
+            {
+              "id": "e0ad62d9-1ba3-48f0-a38e-13768a6c5290",
+              "name": "SydneyKeywords",
+              "value": "={{ $json.output.keywords }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -2608,
+        -8072
+      ],
+      "id": "690ad121-3794-4ec4-83ac-8a5724ebe31f",
+      "name": "Edit Fields14"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "cedc60aa-5d5d-4c41-9339-1db7e9159589",
+              "name": "StartupNews",
+              "value": "={{ $json.output.news }}",
+              "type": "string"
+            },
+            {
+              "id": "e0ad62d9-1ba3-48f0-a38e-13768a6c5290",
+              "name": "StartupKeywords",
+              "value": "={{ $json.output.keywords }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -2608,
+        -7672
+      ],
+      "id": "9d1ea1d2-7e25-49a2-84d1-11177f15c795",
+      "name": "Edit Fields15"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "cedc60aa-5d5d-4c41-9339-1db7e9159589",
+              "name": "NYNews",
+              "value": "={{ $json.output.news }}",
+              "type": "string"
+            },
+            {
+              "id": "e0ad62d9-1ba3-48f0-a38e-13768a6c5290",
+              "name": "NYKeywords",
+              "value": "={{ $json.output.keywords }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -2608,
+        -7272
+      ],
+      "id": "cf1c5b6c-76e9-4c13-b769-ff42ce35cfc0",
+      "name": "Edit Fields16"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "cedc60aa-5d5d-4c41-9339-1db7e9159589",
+              "name": "BusinessNews",
+              "value": "={{ $json.output.news }}",
+              "type": "string"
+            },
+            {
+              "id": "e0ad62d9-1ba3-48f0-a38e-13768a6c5290",
+              "name": "BusinessKeywords",
+              "value": "={{ $json.output.keywords }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -2608,
+        -6872
+      ],
+      "id": "4e4bcb32-8131-42a7-85f8-84d5e00077ec",
+      "name": "Edit Fields17"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "cedc60aa-5d5d-4c41-9339-1db7e9159589",
+              "name": "TopTechNews",
+              "value": "={{ $json.output.news }}",
+              "type": "string"
+            },
+            {
+              "id": "e0ad62d9-1ba3-48f0-a38e-13768a6c5290",
+              "name": "TopTechKeywords",
+              "value": "={{ $json.output.keywords }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -2608,
+        -6472
+      ],
+      "id": "93bd3c32-6d9b-4d31-94f2-40b0f0d1e670",
+      "name": "Edit Fields18"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "cedc60aa-5d5d-4c41-9339-1db7e9159589",
+              "name": "EconomyNews",
+              "value": "={{ $json.output.news }}",
+              "type": "string"
+            },
+            {
+              "id": "e0ad62d9-1ba3-48f0-a38e-13768a6c5290",
+              "name": "EconomyKeywords",
+              "value": "={{ $json.output.keywords }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -2608,
+        -6072
+      ],
+      "id": "71385fd7-3957-4975-a773-a5aabe010eb4",
+      "name": "Edit Fields19"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "cedc60aa-5d5d-4c41-9339-1db7e9159589",
+              "name": "TechnologyNews",
+              "value": "={{ $json.output.news }}",
+              "type": "string"
+            },
+            {
+              "id": "e0ad62d9-1ba3-48f0-a38e-13768a6c5290",
+              "name": "TechnologyKeywords",
+              "value": "={{ $json.output.keywords }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -2608,
+        -5672
+      ],
+      "id": "7a486666-7d09-4487-b8e0-24b2ee17c5f2",
+      "name": "Edit Fields20"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "cedc60aa-5d5d-4c41-9339-1db7e9159589",
+              "name": "DubaiTwitterNews",
+              "value": "={{ $json.output.news }}",
+              "type": "string"
+            },
+            {
+              "id": "e0ad62d9-1ba3-48f0-a38e-13768a6c5290",
+              "name": "DubaiTwitterKeywords",
+              "value": "={{ $json.output.keywords }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -2608,
+        -5272
+      ],
+      "id": "2869cf95-e495-496c-aa89-595d1bc0c7b1",
+      "name": "Edit Fields21"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "cedc60aa-5d5d-4c41-9339-1db7e9159589",
+              "name": "FinanceNews",
+              "value": "={{ $json.output.news }}",
+              "type": "string"
+            },
+            {
+              "id": "e0ad62d9-1ba3-48f0-a38e-13768a6c5290",
+              "name": "FinanceKeywords",
+              "value": "={{ $json.output.keywords }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -2608,
+        -4872
+      ],
+      "id": "d2cd3d0f-7cf0-4a16-a8f2-114494f4b2f7",
+      "name": "Edit Fields22"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "cedc60aa-5d5d-4c41-9339-1db7e9159589",
+              "name": "NYTwitterNews",
+              "value": "={{ $json.output.news }}",
+              "type": "string"
+            },
+            {
+              "id": "e0ad62d9-1ba3-48f0-a38e-13768a6c5290",
+              "name": "NYTwitterKeywords",
+              "value": "={{ $json.output.keywords }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -2608,
+        -4472
+      ],
+      "id": "d342fc1f-bdfe-4136-8ab6-1e411e2f37fa",
+      "name": "Edit Fields23"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "cedc60aa-5d5d-4c41-9339-1db7e9159589",
+              "name": "LondonTwitterNews",
+              "value": "={{ $json.output.news }}",
+              "type": "string"
+            },
+            {
+              "id": "e0ad62d9-1ba3-48f0-a38e-13768a6c5290",
+              "name": "LondonTwitterKeywords",
+              "value": "={{ $json.output.keywords }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -2608,
+        -4072
+      ],
+      "id": "a852c723-e847-46a0-8a84-7a9b42d2d19f",
+      "name": "Edit Fields24"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "cedc60aa-5d5d-4c41-9339-1db7e9159589",
+              "name": "EnergyNews",
+              "value": "={{ $json.output.news }}",
+              "type": "string"
+            },
+            {
+              "id": "e0ad62d9-1ba3-48f0-a38e-13768a6c5290",
+              "name": "EnergyKeywords",
+              "value": "={{ $json.output.keywords }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -2608,
+        -3776
+      ],
+      "id": "0e0984cb-af3b-49ad-a853-3c65afb33620",
+      "name": "Edit Fields25"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "cedc60aa-5d5d-4c41-9339-1db7e9159589",
+              "name": "SFTwitterNews",
+              "value": "={{ $json.output.news }}",
+              "type": "string"
+            },
+            {
+              "id": "e0ad62d9-1ba3-48f0-a38e-13768a6c5290",
+              "name": "SFTwitterKeywords",
+              "value": "={{ $json.output.keywords }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -2608,
+        -3480
+      ],
+      "id": "1f6d2fa7-b7e7-4d18-8bfb-b5aadc62d1a7",
+      "name": "Edit Fields26"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "cedc60aa-5d5d-4c41-9339-1db7e9159589",
+              "name": "LATwittterNews",
+              "value": "={{ $json.output.news }}",
+              "type": "string"
+            },
+            {
+              "id": "e0ad62d9-1ba3-48f0-a38e-13768a6c5290",
+              "name": "LAtwitterKeywords",
+              "value": "={{ $json.output.keywords }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -2608,
+        -3080
+      ],
+      "id": "b378f0e0-00fa-4c46-80de-e8abfb5610e8",
+      "name": "Edit Fields27"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "cedc60aa-5d5d-4c41-9339-1db7e9159589",
+              "name": "TrendSANews",
+              "value": "={{ $json.output.news }}",
+              "type": "string"
+            },
+            {
+              "id": "e0ad62d9-1ba3-48f0-a38e-13768a6c5290",
+              "name": "TrendSAKeywords",
+              "value": "={{ $json.output.keywords }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -2608,
+        -2680
+      ],
+      "id": "707ad6ac-233c-49e7-8a5b-e15216dcdea4",
+      "name": "Edit Fields28"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "cedc60aa-5d5d-4c41-9339-1db7e9159589",
+              "name": "AucklandTwitterNews",
+              "value": "={{ $json.output.news }}",
+              "type": "string"
+            },
+            {
+              "id": "e0ad62d9-1ba3-48f0-a38e-13768a6c5290",
+              "name": "AucklandTwitterKeywords",
+              "value": "={{ $json.output.keywords }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -2608,
+        -2280
+      ],
+      "id": "9bc14455-b5cb-4232-ba57-c893366157f3",
+      "name": "Edit Fields29"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "cedc60aa-5d5d-4c41-9339-1db7e9159589",
+              "name": "DenverTwitterNews",
+              "value": "={{ $json.output.news }}",
+              "type": "string"
+            },
+            {
+              "id": "e0ad62d9-1ba3-48f0-a38e-13768a6c5290",
+              "name": "DenverTwitterKeywords",
+              "value": "={{ $json.output.keywords }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -2608,
+        -1880
+      ],
+      "id": "02416a2d-bbe5-4a54-aa39-f58eefbfdc80",
+      "name": "Edit Fields30"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "cedc60aa-5d5d-4c41-9339-1db7e9159589",
+              "name": "NewsTrendsSANews",
+              "value": "={{ $json.output.news }}",
+              "type": "string"
+            },
+            {
+              "id": "e0ad62d9-1ba3-48f0-a38e-13768a6c5290",
+              "name": "NewsTrendsSAKeywords",
+              "value": "={{ $json.output.keywords }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -2608,
+        -1480
+      ],
+      "id": "38ec9526-df70-4670-97b5-9218ce0c8498",
+      "name": "Edit Fields31"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "cedc60aa-5d5d-4c41-9339-1db7e9159589",
+              "name": "CryptocurrencyNews",
+              "value": "={{ $json.output.news }}",
+              "type": "string"
+            },
+            {
+              "id": "e0ad62d9-1ba3-48f0-a38e-13768a6c5290",
+              "name": "CryptocurrencyKeywords",
+              "value": "={{ $json.output.keywords }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -2608,
+        -1080
+      ],
+      "id": "659562db-f446-4f37-b30f-4076908751d7",
+      "name": "Edit Fields32"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "cedc60aa-5d5d-4c41-9339-1db7e9159589",
+              "name": "SentimentNews",
+              "value": "={{ $json.output.news }}",
+              "type": "string"
+            },
+            {
+              "id": "e0ad62d9-1ba3-48f0-a38e-13768a6c5290",
+              "name": "SentimentKeywords",
+              "value": "={{ $json.output.keywords }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -2608,
+        -680
+      ],
+      "id": "a45591cf-9ce1-4839-b374-deb2b73743b7",
+      "name": "Edit Fields33"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "cedc60aa-5d5d-4c41-9339-1db7e9159589",
+              "name": "TopTiktokNews",
+              "value": "={{ $json.output.news }}",
+              "type": "string"
+            },
+            {
+              "id": "e0ad62d9-1ba3-48f0-a38e-13768a6c5290",
+              "name": "TopTiktokKeywords",
+              "value": "={{ $json.output.keywords }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -2608,
+        -280
+      ],
+      "id": "b47de14b-9fa6-47f6-be4b-7119a6808b56",
+      "name": "Edit Fields34"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "cedc60aa-5d5d-4c41-9339-1db7e9159589",
+              "name": "TrendTiktokNews",
+              "value": "={{ $json.output.news }}",
+              "type": "string"
+            },
+            {
+              "id": "e0ad62d9-1ba3-48f0-a38e-13768a6c5290",
+              "name": "TrendTiktokKeywords",
+              "value": "={{ $json.output.keywords }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -2608,
+        120
+      ],
+      "id": "eade3a3e-9650-4263-9354-1222c07e499a",
+      "name": "Edit Fields35"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "cedc60aa-5d5d-4c41-9339-1db7e9159589",
+              "name": "GlobalTrendsNews",
+              "value": "={{ $json.output.news }}",
+              "type": "string"
+            },
+            {
+              "id": "e0ad62d9-1ba3-48f0-a38e-13768a6c5290",
+              "name": "GlobalTrendsKeywords",
+              "value": "={{ $json.output.keywords }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -2608,
+        520
+      ],
+      "id": "48327ca9-bd50-4761-8a03-3a78741c2b34",
+      "name": "Edit Fields36"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "cedc60aa-5d5d-4c41-9339-1db7e9159589",
+              "name": "SentCryptoNews",
+              "value": "={{ $json.output.news }}",
+              "type": "string"
+            },
+            {
+              "id": "e0ad62d9-1ba3-48f0-a38e-13768a6c5290",
+              "name": "SentCryptoKeywords",
+              "value": "={{ $json.output.keywords }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -2608,
+        920
+      ],
+      "id": "42e40be7-b8cb-4f2f-981b-1c4f208dfa1f",
+      "name": "Edit Fields37"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        -2384,
+        -11672
+      ],
+      "id": "3bba4e4e-45be-454d-b106-7662d06e0b1c",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        -2384,
+        -10872
+      ],
+      "id": "d7557377-883a-4f4d-965d-62d803cde6ee",
+      "name": "Merge1"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        -2384,
+        -12472
+      ],
+      "id": "6ce52b05-57d5-442c-b3b8-7ac77d4851d3",
+      "name": "Merge2"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        -2384,
+        -10072
+      ],
+      "id": "cc4b4474-eb5a-4040-80c6-f9a761656b16",
+      "name": "Merge3"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        -2384,
+        -9272
+      ],
+      "id": "cc6b6adf-485f-42af-982a-0853dbd6603e",
+      "name": "Merge5"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        -2384,
+        -8472
+      ],
+      "id": "f5eae367-3645-43d8-80ed-326d548dc1ec",
+      "name": "Merge6"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        -2384,
+        -7672
+      ],
+      "id": "ff200690-399c-4af2-95d1-d71f8f9a5fb0",
+      "name": "Merge7"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        -2384,
+        -6872
+      ],
+      "id": "307afd56-71e0-4f0c-bf0f-f786bec748cf",
+      "name": "Merge8"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        -2384,
+        -6072
+      ],
+      "id": "fb6bfb13-d42f-46f3-bb6e-e8d3a6fefdbf",
+      "name": "Merge9"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        -2384,
+        -5272
+      ],
+      "id": "c1e6f020-0460-4b82-b78f-b59457ca8f01",
+      "name": "Merge10"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        -2384,
+        -4472
+      ],
+      "id": "4c848bc9-75d6-4afe-84f0-a9201b202c70",
+      "name": "Merge11"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        -2384,
+        -3776
+      ],
+      "id": "c5227f3a-7751-489a-81a8-8525f805d64f",
+      "name": "Merge12"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        -2384,
+        -3080
+      ],
+      "id": "e2bf655b-f5a2-44f8-83f3-e1314547c7bc",
+      "name": "Merge13"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        -2384,
+        -2280
+      ],
+      "id": "1744db46-fd8c-4db4-acf2-8ac98f38e440",
+      "name": "Merge14"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        -2384,
+        -1480
+      ],
+      "id": "b319e6bb-fce9-47d5-8fd4-78ba3847556d",
+      "name": "Merge15"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        -2384,
+        -680
+      ],
+      "id": "cd65ce49-732e-4358-a632-e798732b762f",
+      "name": "Merge16"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        -2384,
+        120
+      ],
+      "id": "9406ae4f-ad43-47b6-9272-c8b40e32598d",
+      "name": "Merge18"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        -2384,
+        920
+      ],
+      "id": "a14fe4d5-4e68-4fe4-bd3d-48199a8c75ba",
+      "name": "Merge19"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        -2160,
+        520
+      ],
+      "id": "83d86f2b-aee1-45b2-84f9-9c85b985303c",
+      "name": "Merge20"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        -2160,
+        -1080
+      ],
+      "id": "572a417e-86c0-4ea4-9ced-b57b9853c9f6",
+      "name": "Merge21"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        -2160,
+        -2680
+      ],
+      "id": "1381a842-7e93-412a-a357-8268b0bb436a",
+      "name": "Merge22"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        -2160,
+        -4124
+      ],
+      "id": "6aa1922e-602c-4c75-b6e6-8bfa79a9ded6",
+      "name": "Merge24"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        -2160,
+        -5672
+      ],
+      "id": "ae47511c-007e-4e70-89e8-27d8cc79ce44",
+      "name": "Merge25"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        -2160,
+        -7272
+      ],
+      "id": "763d9daf-6511-47b3-961c-038bc647ddd6",
+      "name": "Merge26"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        -2160,
+        -8872
+      ],
+      "id": "e382b422-24e8-41e9-95db-ddd825b3f89f",
+      "name": "Merge27"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        -2160,
+        -10472
+      ],
+      "id": "ccc051bb-bb77-4a49-8023-bc9f7dc93d15",
+      "name": "Merge28"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        -2160,
+        -12072
+      ],
+      "id": "96dc6c4c-5984-4ee1-92aa-c6a3f7d8a75a",
+      "name": "Merge29"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        -1936,
+        -12524
+      ],
+      "id": "5405b612-5638-4b95-9cce-10fae76f6af7",
+      "name": "Merge30"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        -1712,
+        -11724
+      ],
+      "id": "2663f69e-88a3-4992-adf4-0c2f5541c758",
+      "name": "Merge31"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        -1936,
+        -8072
+      ],
+      "id": "4ab3a875-9b3b-4610-9b5f-765b221c36e2",
+      "name": "Merge32"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        -1936,
+        -4924
+      ],
+      "id": "df33c11c-76cb-4cf8-95df-55e5c1eb5334",
+      "name": "Merge33"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        -1936,
+        -1880
+      ],
+      "id": "844b05ab-c2e7-4e40-bd51-a99a2ed099f4",
+      "name": "Merge34"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        -1712,
+        -1080
+      ],
+      "id": "d6fbaf06-31f0-410a-80c5-6d1e3e113a26",
+      "name": "Merge36"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        -1712,
+        -6524
+      ],
+      "id": "fb4f727d-790e-471e-a188-05263be3aef0",
+      "name": "Merge38"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        -1488,
+        -8576
+      ],
+      "id": "61fbdb35-e8b8-43d1-915d-6754fee92de3",
+      "name": "Merge41"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        -1264,
+        -6228
+      ],
+      "id": "2e761792-51fe-4596-a0fb-7c7e68065a31",
+      "name": "Merge42"
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "base": {
+          "__rl": true,
+          "value": "appXBHmjTdHh5YZ7U",
+          "mode": "list",
+          "cachedResultName": "N8nFlow",
+          "cachedResultUrl": "https://airtable.com/appXBHmjTdHh5YZ7U"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblxXRZfj3aN7bQ68",
+          "mode": "list",
+          "cachedResultName": "News",
+          "cachedResultUrl": "https://airtable.com/appXBHmjTdHh5YZ7U/tblxXRZfj3aN7bQ68"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "SFTwitterNews": "={{ $json.SFTwitterNews }}",
+            "LATwitterNews": "={{ $json.LATwittterNews }}",
+            "TrendSANews": "={{ $json.TrendSANews }}",
+            "AucklandTwitterNews": "={{ $json.AucklandTwitterNews }}",
+            "DenverTwitterNews": "={{ $json.DenverTwitterNews }}",
+            "NewsTrendsSANews": "={{ $json.NewsTrendsSANews }}",
+            "CryptocurrencyNews": "={{ $json.CryptocurrencyNews }}",
+            "TopTiktokNews": "={{ $json.TopTiktokNews }}",
+            "TrendTiktokNews": "={{ $json.TrendTiktokNews }}",
+            "GlobalTrendsNews": "={{ $json.GlobalTrendsNews }}",
+            "SentCryptoNews": "={{ $json.SentCryptoNews }}",
+            "EnergyNews": "={{ $json.EnergyNews }}",
+            "TechnologyNews": "={{ $json.TechnologyNews }}",
+            "CryptoNews": "={{ $json.CryptoNews }}",
+            "MarketNews": "={{ $json.MarketsNews }}",
+            "VancouverNews": "={{ $json.VancouverNews }}",
+            "LondonNews": "={{ $json.LondonNews }}",
+            "CapetownNews": "={{ $json.CapeTownNews }}",
+            "LifestyleNews": "={{ $json.LifestyleNews }}",
+            "SFNews": "={{ $json.SFNews }}",
+            "TechNews": "={{ $json.TechNews }}",
+            "AucklandNews": "={{ $json.AucklandNews }}",
+            "ScienceNews": "={{ $json.ScienceNews }}",
+            "TorontoNews": "={{ $json.TorontoNews }}",
+            "EnvNews": "={{ $json.ENVNews }}",
+            "SydneyNews": "={{ $json.SydneyNews }}",
+            "StartupNews": "={{ $json.StartupNews }}",
+            "NYNews": "={{ $json.NYNews }}",
+            "BusinessNews": "={{ $json.BusinessNews }}",
+            "TopTechNews": "={{ $json.TopTechNews }}",
+            "EconomyNews": "={{ $json.EconomyNews }}",
+            "DubaiTwitterNews": "={{ $json.DubaiTwitterNews }}",
+            "FinanceNews": "={{ $json.FinanceNews }}",
+            "NYTwitterNews": "={{ $json.NYTwitterNews }}",
+            "LondonTwitterNews": "={{ $json.LondonTwitterNews }}",
+            "Date": "={{ $now }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Date",
+              "displayName": "Date",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "LATwitterNews",
+              "displayName": "LATwitterNews",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "TrendSANews",
+              "displayName": "TrendSANews",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "AucklandTwitterNews",
+              "displayName": "AucklandTwitterNews",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "DenverTwitterNews",
+              "displayName": "DenverTwitterNews",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "NewsTrendsSANews",
+              "displayName": "NewsTrendsSANews",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "CryptocurrencyNews",
+              "displayName": "CryptocurrencyNews",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "TopTiktokNews",
+              "displayName": "TopTiktokNews",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "TrendTiktokNews",
+              "displayName": "TrendTiktokNews",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "GlobalTrendsNews",
+              "displayName": "GlobalTrendsNews",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "SentCryptoNews",
+              "displayName": "SentCryptoNews",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "EnergyNews",
+              "displayName": "EnergyNews",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "TechnologyNews",
+              "displayName": "TechnologyNews",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "CryptoNews",
+              "displayName": "CryptoNews",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "MarketNews",
+              "displayName": "MarketNews",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "VancouverNews",
+              "displayName": "VancouverNews",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "LondonNews",
+              "displayName": "LondonNews",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "CapetownNews",
+              "displayName": "CapetownNews",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "LifestyleNews",
+              "displayName": "LifestyleNews",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "SFNews",
+              "displayName": "SFNews",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "TechNews",
+              "displayName": "TechNews",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "AucklandNews",
+              "displayName": "AucklandNews",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "ScienceNews",
+              "displayName": "ScienceNews",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "TorontoNews",
+              "displayName": "TorontoNews",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "EnvNews",
+              "displayName": "EnvNews",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "SydneyNews",
+              "displayName": "SydneyNews",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "StartupNews",
+              "displayName": "StartupNews",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "NYNews",
+              "displayName": "NYNews",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "BusinessNews",
+              "displayName": "BusinessNews",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "TopTechNews",
+              "displayName": "TopTechNews",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "EconomyNews",
+              "displayName": "EconomyNews",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "DubaiTwitterNews",
+              "displayName": "DubaiTwitterNews",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "FinanceNews",
+              "displayName": "FinanceNews",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "NYTwitterNews",
+              "displayName": "NYTwitterNews",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "LondonTwitterNews",
+              "displayName": "LondonTwitterNews",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "SFTwitterNews",
+              "displayName": "SFTwitterNews",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        -1040,
+        -6324
+      ],
+      "id": "32eb4174-9c03-400a-ac25-0ebe2aeaeec2",
+      "name": "News",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "UxM8ezI0fcNDfGnr",
+          "name": "Airtable account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "base": {
+          "__rl": true,
+          "value": "appXBHmjTdHh5YZ7U",
+          "mode": "list",
+          "cachedResultName": "N8nFlow",
+          "cachedResultUrl": "https://airtable.com/appXBHmjTdHh5YZ7U"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblJ7j59R34Dd78EB",
+          "mode": "list",
+          "cachedResultName": "Keywords",
+          "cachedResultUrl": "https://airtable.com/appXBHmjTdHh5YZ7U/tblJ7j59R34Dd78EB"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "SFTwitter": "={{ $json.SFTwitterKeywords }}",
+            "LATwtitter": "={{ $json.LAtwitterKeywords }}",
+            "TrendsSA": "={{ $json.TrendSAKeywords }}",
+            "AucklandTwitter": "={{ $json.AucklandTwitterKeywords }}",
+            "DenverTwitter": "={{ $json.DenverTwitterKeywords }}",
+            "NewsTrendsSA": "={{ $json.NewsTrendsSAKeywords }}",
+            "Cryptocurrency": "={{ $json.CryptocurrencyKeywords }}",
+            "TopTiktok": "={{ $json.TopTiktokKeywords }}",
+            "TrendTiktok": "={{ $json.TrendTiktokKeywords }}",
+            "Energy": "={{ $json.EnergyKeywords }}",
+            "Technology": "={{ $json.TechnologyKeywords }}",
+            "Crypto": "={{ $json.CryptoKeywords }}",
+            "Markets": "={{ $json.MarketsKeywords }}",
+            "Vancouver": "={{ $json.VancouverKeywords }}",
+            "London": "={{ $json.LondonKeywords }}",
+            "Capetown": "={{ $json.CapetownKeywords }}",
+            "Lifestyle": "={{ $json.LifestyleKeywords }}",
+            "SF": "={{ $json.SFKeywords }}",
+            "Tech": "={{ $json.TechKeywords }}",
+            "Auckland": "={{ $json.AucklandKeywords }}",
+            "Science": "={{ $json.ScienceKeywords }}",
+            "Toronto": "={{ $json.TorontoKeywords }}",
+            "Env": "={{ $json.ENVKeywords }}",
+            "Sydney": "={{ $json.SydneyKeywords }}",
+            "Startup": "={{ $json.StartupKeywords }}",
+            "NY": "={{ $json.NYKeywords }}",
+            "Business": "={{ $json.BusinessKeywords }}",
+            "TopTech": "={{ $json.TopTechKeywords }}",
+            "Economy": "={{ $json.EconomyKeywords }}",
+            "DubaiTwitter": "={{ $json.DubaiTwitterKeywords }}",
+            "Finance": "={{ $json.FinanceKeywords }}",
+            "NYTwitter": "={{ $json.NYTwitterKeywords }}",
+            "LondonTwitter": "={{ $json.LondonTwitterKeywords }}",
+            "GlobalTrends": "={{ $json.GlobalTrendsKeywords }}",
+            "Date": "={{ $now }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Date",
+              "displayName": "Date",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "LATwtitter",
+              "displayName": "LATwtitter",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "TrendsSA",
+              "displayName": "TrendsSA",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "AucklandTwitter",
+              "displayName": "AucklandTwitter",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "DenverTwitter",
+              "displayName": "DenverTwitter",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "NewsTrendsSA",
+              "displayName": "NewsTrendsSA",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Cryptocurrency",
+              "displayName": "Cryptocurrency",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "TopTiktok",
+              "displayName": "TopTiktok",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "TrendTiktok",
+              "displayName": "TrendTiktok",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "GlobalTrends",
+              "displayName": "GlobalTrends",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Energy",
+              "displayName": "Energy",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Technology",
+              "displayName": "Technology",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Crypto",
+              "displayName": "Crypto",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Markets",
+              "displayName": "Markets",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Vancouver",
+              "displayName": "Vancouver",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "London",
+              "displayName": "London",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Capetown",
+              "displayName": "Capetown",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Lifestyle",
+              "displayName": "Lifestyle",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "SF",
+              "displayName": "SF",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Tech",
+              "displayName": "Tech",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Auckland",
+              "displayName": "Auckland",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Science",
+              "displayName": "Science",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Toronto",
+              "displayName": "Toronto",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Env",
+              "displayName": "Env",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Sydney",
+              "displayName": "Sydney",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Startup",
+              "displayName": "Startup",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "NY",
+              "displayName": "NY",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Business",
+              "displayName": "Business",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "TopTech",
+              "displayName": "TopTech",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Economy",
+              "displayName": "Economy",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "DubaiTwitter",
+              "displayName": "DubaiTwitter",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Finance",
+              "displayName": "Finance",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "NYTwitter",
+              "displayName": "NYTwitter",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "LondonTwitter",
+              "displayName": "LondonTwitter",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "SFTwitter",
+              "displayName": "SFTwitter",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        -1040,
+        -6132
+      ],
+      "id": "65d4f8c8-7973-49c9-b479-538679b3f772",
+      "name": "Keywords",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "UxM8ezI0fcNDfGnr",
+          "name": "Airtable account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "base": {
+          "__rl": true,
+          "value": "appXBHmjTdHh5YZ7U",
+          "mode": "list",
+          "cachedResultName": "N8nFlow",
+          "cachedResultUrl": "https://airtable.com/appXBHmjTdHh5YZ7U"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblLc2Ri75caqlyY1",
+          "mode": "list",
+          "cachedResultName": "GeneralKeywords",
+          "cachedResultUrl": "https://airtable.com/appXBHmjTdHh5YZ7U/tblLc2Ri75caqlyY1"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Keywords": "={{ $json.fields.SFTwitter }}{{ $json.fields.LATwtitter }}{{ $json.fields.TrendsSA }}{{ $json.fields.AucklandTwitter }}{{ $json.fields.DenverTwitter }}{{ $json.fields.NewsTrendsSA }}{{ $json.fields.Cryptocurrency }}{{ $json.fields.TopTiktok }}{{ $json.fields.TrendTiktok }}{{ $json.fields.GlobalTrends }}{{ $json.fields.Energy }}{{ $json.fields.Technology }}{{ $json.fields.Crypto }}{{ $json.fields.Markets }}{{ $json.fields.Vancouver }}{{ $json.fields.London }}{{ $json.fields.Capetown }}{{ $json.fields.Lifestyle }}{{ $json.fields.Tech }}{{ $json.fields.Auckland }}{{ $json.fields.Science }}{{ $json.fields.Toronto }}{{ $json.fields.Env }}{{ $json.fields.Sydney }}{{ $json.fields.Startup }}{{ $json.fields.NY }}{{ $json.fields.Business }}{{ $json.fields.TopTech }}{{ $json.fields.Economy }}{{ $json.fields.Finance }}{{ $json.fields.NYTwitter }}{{ $json.fields.LondonTwitter }}",
+            "Date": "={{ $today }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Date",
+              "displayName": "Date",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Keywords",
+              "displayName": "Keywords",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        -816,
+        -6132
+      ],
+      "id": "2ca94abc-dea8-4296-923a-b70f02b11d94",
+      "name": "Keywords1",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "UxM8ezI0fcNDfGnr",
+          "name": "Airtable account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 12
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -3456,
+        -6072
+      ],
+      "id": "461e3cef-90e2-47d9-b6dd-49515d3c994e",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "Summarize the entirety of the information received from the API for news and keywords. ",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.1,
+      "position": [
+        -3120,
+        -10176
+      ],
+      "id": "af7cf57a-c552-4476-aa53-283939ab3b88",
+      "name": "AI Agent38",
+      "retryOnFail": true
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "AI Agent28",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AI Agent27",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AI Agent26",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AI Agent25",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AI Agent24",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AI Agent22",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AI Agent23",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AI Agent21",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AI Agent20",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AI Agent16",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AI Agent18",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AI Agent14",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AI Agent17",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AI Agent19",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AI Agent15",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AI Agent13",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AI Agent12",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AI Agent11",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AI Agent10",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AI Agent9",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AI Agent8",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AI Agent7",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AI Agent6",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AI Agent5",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AI Agent4",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AI Agent3",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AI Agent2",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AI Agent1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent1": {
+      "main": [
+        [
+          {
+            "node": "BlogIdea",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "BlogIdea",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Facebook",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Warpcast1",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Twitter",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Reddit",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Structured Output Parser1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get a record1": {
+      "main": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "BlogIdea": {
+      "main": [
+        [
+          {
+            "node": "Facebook",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Warpcast1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Twitter",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Reddit",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message a model in Perplexity": {
+      "ai_tool": [
+        [
+          {
+            "node": "BlogIdea",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser1": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Facebook",
+            "type": "ai_outputParser",
+            "index": 0
+          },
+          {
+            "node": "BlogIdea",
+            "type": "ai_outputParser",
+            "index": 0
+          },
+          {
+            "node": "Warpcast1",
+            "type": "ai_outputParser",
+            "index": 0
+          },
+          {
+            "node": "Twitter",
+            "type": "ai_outputParser",
+            "index": 0
+          },
+          {
+            "node": "Reddit",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "LifestyleNews1": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "AI Agent38",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "AI Agent2",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "AI Agent3",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "AI Agent10",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "AI Agent9",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "AI Agent11",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "AI Agent12",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "AI Agent13",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "AI Agent15",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "AI Agent19",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "AI Agent17",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "AI Agent14",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "AI Agent18",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "AI Agent16",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "AI Agent20",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "AI Agent21",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "AI Agent23",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "AI Agent22",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "AI Agent24",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "AI Agent25",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "AI Agent26",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "AI Agent27",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "AI Agent28",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "AI Agent31",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "AI Agent32",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "AI Agent29",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "AI Agent30",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "AI Agent33",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "AI Agent34",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "AI Agent35",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "AI Agent36",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "AI Agent37",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Structured Output Parser",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "AI Agent4",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "AI Agent5",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "AI Agent6",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "AI Agent7",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "AI Agent8",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "TechnologyNews4": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent38",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "EnvironmentNews2": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent3",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ScienceNews3": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent2",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_outputParser",
+            "index": 0
+          },
+          {
+            "node": "AI Agent38",
+            "type": "ai_outputParser",
+            "index": 0
+          },
+          {
+            "node": "AI Agent2",
+            "type": "ai_outputParser",
+            "index": 0
+          },
+          {
+            "node": "AI Agent3",
+            "type": "ai_outputParser",
+            "index": 0
+          },
+          {
+            "node": "AI Agent5",
+            "type": "ai_outputParser",
+            "index": 0
+          },
+          {
+            "node": "AI Agent6",
+            "type": "ai_outputParser",
+            "index": 0
+          },
+          {
+            "node": "AI Agent7",
+            "type": "ai_outputParser",
+            "index": 0
+          },
+          {
+            "node": "AI Agent8",
+            "type": "ai_outputParser",
+            "index": 0
+          },
+          {
+            "node": "AI Agent10",
+            "type": "ai_outputParser",
+            "index": 0
+          },
+          {
+            "node": "AI Agent9",
+            "type": "ai_outputParser",
+            "index": 0
+          },
+          {
+            "node": "AI Agent11",
+            "type": "ai_outputParser",
+            "index": 0
+          },
+          {
+            "node": "AI Agent12",
+            "type": "ai_outputParser",
+            "index": 0
+          },
+          {
+            "node": "AI Agent13",
+            "type": "ai_outputParser",
+            "index": 0
+          },
+          {
+            "node": "AI Agent15",
+            "type": "ai_outputParser",
+            "index": 0
+          },
+          {
+            "node": "AI Agent19",
+            "type": "ai_outputParser",
+            "index": 0
+          },
+          {
+            "node": "AI Agent17",
+            "type": "ai_outputParser",
+            "index": 0
+          },
+          {
+            "node": "AI Agent14",
+            "type": "ai_outputParser",
+            "index": 0
+          },
+          {
+            "node": "AI Agent18",
+            "type": "ai_outputParser",
+            "index": 0
+          },
+          {
+            "node": "AI Agent16",
+            "type": "ai_outputParser",
+            "index": 0
+          },
+          {
+            "node": "AI Agent20",
+            "type": "ai_outputParser",
+            "index": 0
+          },
+          {
+            "node": "AI Agent21",
+            "type": "ai_outputParser",
+            "index": 0
+          },
+          {
+            "node": "AI Agent23",
+            "type": "ai_outputParser",
+            "index": 0
+          },
+          {
+            "node": "AI Agent22",
+            "type": "ai_outputParser",
+            "index": 0
+          },
+          {
+            "node": "AI Agent24",
+            "type": "ai_outputParser",
+            "index": 0
+          },
+          {
+            "node": "AI Agent25",
+            "type": "ai_outputParser",
+            "index": 0
+          },
+          {
+            "node": "AI Agent26",
+            "type": "ai_outputParser",
+            "index": 0
+          },
+          {
+            "node": "AI Agent27",
+            "type": "ai_outputParser",
+            "index": 0
+          },
+          {
+            "node": "AI Agent28",
+            "type": "ai_outputParser",
+            "index": 0
+          },
+          {
+            "node": "AI Agent31",
+            "type": "ai_outputParser",
+            "index": 0
+          },
+          {
+            "node": "AI Agent32",
+            "type": "ai_outputParser",
+            "index": 0
+          },
+          {
+            "node": "AI Agent29",
+            "type": "ai_outputParser",
+            "index": 0
+          },
+          {
+            "node": "AI Agent30",
+            "type": "ai_outputParser",
+            "index": 0
+          },
+          {
+            "node": "AI Agent33",
+            "type": "ai_outputParser",
+            "index": 0
+          },
+          {
+            "node": "AI Agent34",
+            "type": "ai_outputParser",
+            "index": 0
+          },
+          {
+            "node": "AI Agent35",
+            "type": "ai_outputParser",
+            "index": 0
+          },
+          {
+            "node": "AI Agent36",
+            "type": "ai_outputParser",
+            "index": 0
+          },
+          {
+            "node": "AI Agent37",
+            "type": "ai_outputParser",
+            "index": 0
+          },
+          {
+            "node": "AI Agent4",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent2": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields11",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent3": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields13",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent4": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields15",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent5": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields17",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent6": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields19",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent7": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields20",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent8": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields22",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "StartupNews3": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent4",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "BusinessNews4": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent5",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "EconomyNews5": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent6",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "TechnologyNews6": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent7",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "FinanceNews7": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent8",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent9": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent10": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent11": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent12": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "EnergyNews": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent9",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "TechnologyNews1": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent10",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MarketsNews3": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent12",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "CryptocurrencyNews2": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent11",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent13": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent14": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields10",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent15": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent16": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields14",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent17": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent18": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields12",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent19": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent20": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields16",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "CapetownNews4": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent19",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "NYNews": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent20",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "TorontoNews5": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent18",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SFNews6": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent17",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "LondonNews8": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent15",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SydneyNews7": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent16",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "VancouverNews9": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent13",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AucklandNews10": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent14",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent21": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields18",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent22": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields23",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent23": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields21",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent24": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields24",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent25": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields25",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent26": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields26",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent27": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields27",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent28": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields28",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "TopTechNews2": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent21",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "NYTwitterTrends4": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent22",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "DubaiTwitterTrends1": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent23",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "LondonTwitterTrends": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent24",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SFTwitterTrends5": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent26",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "LATwitterTrends3": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent27",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "TrendingSeekingAlpha1": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent28",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent29": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields31",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent30": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields32",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "NewsTrendingSeekingAlpha": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent29",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent31": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields29",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent32": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields30",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AucklandTwitterTrends1": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent31",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "DenverTwitterTrends6": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent32",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent33": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields33",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent34": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields34",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "CryptoNews1": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent30",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SentimentNews2": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent33",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "TopTikTok": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent34",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent35": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields35",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent36": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields36",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "TrendingTikTok1": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent35",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GlobalTrends1": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent36",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent37": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields37",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SentimentCrypto1": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent37",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields2": {
+      "main": [
+        [
+          {
+            "node": "Merge4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge4": {
+      "main": [
+        [
+          {
+            "node": "Merge30",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Merge4",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Merge2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields3": {
+      "main": [
+        [
+          {
+            "node": "Merge2",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Edit Fields4": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields5": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Edit Fields6": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields7": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Edit Fields8": {
+      "main": [
+        [
+          {
+            "node": "Merge3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields9": {
+      "main": [
+        [
+          {
+            "node": "Merge3",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Edit Fields10": {
+      "main": [
+        [
+          {
+            "node": "Merge5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields11": {
+      "main": [
+        [
+          {
+            "node": "Merge5",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Edit Fields12": {
+      "main": [
+        [
+          {
+            "node": "Merge6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields13": {
+      "main": [
+        [
+          {
+            "node": "Merge6",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Edit Fields14": {
+      "main": [
+        [
+          {
+            "node": "Merge7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields15": {
+      "main": [
+        [
+          {
+            "node": "Merge7",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Edit Fields16": {
+      "main": [
+        [
+          {
+            "node": "Merge8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields17": {
+      "main": [
+        [
+          {
+            "node": "Merge8",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Edit Fields18": {
+      "main": [
+        [
+          {
+            "node": "Merge9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields19": {
+      "main": [
+        [
+          {
+            "node": "Merge9",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Edit Fields20": {
+      "main": [
+        [
+          {
+            "node": "Merge10",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields21": {
+      "main": [
+        [
+          {
+            "node": "Merge10",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Edit Fields22": {
+      "main": [
+        [
+          {
+            "node": "Merge11",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields23": {
+      "main": [
+        [
+          {
+            "node": "Merge11",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Edit Fields24": {
+      "main": [
+        [
+          {
+            "node": "Merge12",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields25": {
+      "main": [
+        [
+          {
+            "node": "Merge12",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Edit Fields26": {
+      "main": [
+        [
+          {
+            "node": "Merge13",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields27": {
+      "main": [
+        [
+          {
+            "node": "Merge13",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Edit Fields28": {
+      "main": [
+        [
+          {
+            "node": "Merge14",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields29": {
+      "main": [
+        [
+          {
+            "node": "Merge14",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Edit Fields30": {
+      "main": [
+        [
+          {
+            "node": "Merge15",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields31": {
+      "main": [
+        [
+          {
+            "node": "Merge15",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Edit Fields32": {
+      "main": [
+        [
+          {
+            "node": "Merge16",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields33": {
+      "main": [
+        [
+          {
+            "node": "Merge16",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Edit Fields34": {
+      "main": [
+        [
+          {
+            "node": "Merge18",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields35": {
+      "main": [
+        [
+          {
+            "node": "Merge18",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Edit Fields36": {
+      "main": [
+        [
+          {
+            "node": "Merge19",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields37": {
+      "main": [
+        [
+          {
+            "node": "Merge19",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Merge29",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge1": {
+      "main": [
+        [
+          {
+            "node": "Merge28",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge2": {
+      "main": [
+        [
+          {
+            "node": "Merge29",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge3": {
+      "main": [
+        [
+          {
+            "node": "Merge28",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge5": {
+      "main": [
+        [
+          {
+            "node": "Merge27",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge6": {
+      "main": [
+        [
+          {
+            "node": "Merge27",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge7": {
+      "main": [
+        [
+          {
+            "node": "Merge26",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge8": {
+      "main": [
+        [
+          {
+            "node": "Merge26",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge9": {
+      "main": [
+        [
+          {
+            "node": "Merge25",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge10": {
+      "main": [
+        [
+          {
+            "node": "Merge25",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge11": {
+      "main": [
+        [
+          {
+            "node": "Merge24",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge12": {
+      "main": [
+        [
+          {
+            "node": "Merge24",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge13": {
+      "main": [
+        [
+          {
+            "node": "Merge22",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge14": {
+      "main": [
+        [
+          {
+            "node": "Merge22",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge15": {
+      "main": [
+        [
+          {
+            "node": "Merge21",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge16": {
+      "main": [
+        [
+          {
+            "node": "Merge21",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge18": {
+      "main": [
+        [
+          {
+            "node": "Merge20",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge19": {
+      "main": [
+        [
+          {
+            "node": "Merge20",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge20": {
+      "main": [
+        [
+          {
+            "node": "Merge36",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge21": {
+      "main": [
+        [
+          {
+            "node": "Merge34",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge22": {
+      "main": [
+        [
+          {
+            "node": "Merge34",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge24": {
+      "main": [
+        [
+          {
+            "node": "Merge33",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge25": {
+      "main": [
+        [
+          {
+            "node": "Merge33",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge26": {
+      "main": [
+        [
+          {
+            "node": "Merge32",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge27": {
+      "main": [
+        [
+          {
+            "node": "Merge32",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge28": {
+      "main": [
+        [
+          {
+            "node": "Merge31",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge29": {
+      "main": [
+        [
+          {
+            "node": "Merge30",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge30": {
+      "main": [
+        [
+          {
+            "node": "Merge31",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge31": {
+      "main": [
+        [
+          {
+            "node": "Merge41",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge32": {
+      "main": [
+        [
+          {
+            "node": "Merge38",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge33": {
+      "main": [
+        [
+          {
+            "node": "Merge38",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge34": {
+      "main": [
+        [
+          {
+            "node": "Merge36",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge36": {
+      "main": [
+        [
+          {
+            "node": "Merge42",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge38": {
+      "main": [
+        [
+          {
+            "node": "Merge41",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge41": {
+      "main": [
+        [
+          {
+            "node": "Merge42",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge42": {
+      "main": [
+        [
+          {
+            "node": "News",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Keywords",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Keywords": {
+      "main": [
+        [
+          {
+            "node": "Keywords1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "AI Agent9",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AI Agent10",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AI Agent11",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AI Agent12",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AI Agent13",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AI Agent15",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AI Agent19",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AI Agent17",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AI Agent38",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AI Agent14",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AI Agent2",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AI Agent18",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AI Agent3",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AI Agent16",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AI Agent4",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AI Agent20",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AI Agent5",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AI Agent21",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AI Agent6",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AI Agent7",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AI Agent23",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AI Agent8",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AI Agent22",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AI Agent24",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AI Agent25",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AI Agent26",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AI Agent27",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AI Agent28",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AI Agent31",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AI Agent32",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AI Agent29",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AI Agent30",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AI Agent33",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AI Agent34",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AI Agent35",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AI Agent36",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AI Agent37",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent38": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "News": {
+      "main": [
+        [
+          {
+            "node": "Get a record1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "018dcee6-0ff8-491d-8d59-eb75594bab39",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "1b2acf6335783249b428ec232a8da689f33ea1e5291dd7cc36a412d57bc021a5"
+  },
+  "id": "QxIqLLOSrZlueNOA",
+  "tags": []
+}

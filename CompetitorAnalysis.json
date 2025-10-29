@@ -1,0 +1,1223 @@
+{
+  "name": "CompetitorAnalysis",
+  "nodes": [
+    {
+      "parameters": {
+        "model": "sonar",
+        "messages": {
+          "message": [
+            {
+              "content": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('message0_Text', ``, 'string') }}"
+            }
+          ]
+        },
+        "options": {},
+        "requestOptions": {}
+      },
+      "type": "n8n-nodes-base.perplexityTool",
+      "typeVersion": 1,
+      "position": [
+        176,
+        -592
+      ],
+      "id": "1a51445e-ebf2-4eaf-a08f-44d9aac19d29",
+      "name": "Message a model in Perplexity",
+      "credentials": {
+        "perplexityApi": {
+          "id": "1bsNUyGlQGIg1S1n",
+          "name": "Perplexity account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=To gain deeper insight into the competitive landscape, please provide detailed persona descriptions for each competitor. Your responses should include the following elements for each competitor:\n\nName of Competitor:\n(e.g., Company or Project Name)\n\nCore Value Proposition:\n(What unique value or solution do they offer?)\n\nTarget Audience:\n(Who are their primary users or customers? Include demographics, professional roles, or communities.)\n\nBrand Personality:\n(Describe their tone, style, and how they present themselves to the market.)\n\nKey Motivations and Goals:\n(What drives this competitor? What are their main objectives?)\n\nPain Points Addressed:\n(What problems do they solve for their users?)\n\nDistinctive Features or Capabilities:\n(What sets them apart from others in the space?)\n\nPerceived Weaknesses or Limitations:\n(Where do they fall short, or what challenges do they face?)\n\n {{ $json.output }}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        384,
+        -528
+      ],
+      "id": "81398de8-60ec-4f53-b206-10d21c0eae97",
+      "name": "Persona"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=What are the core messages or key value propositions that each competitor communicates?\n\nFor each competitor, summarize their core message in 1-2 sentences.\n\nFocus on the main themes, unique selling points, and the emotional or rational appeal present in their persona description.\n\nAvoid copying text verbatim; instead, synthesize and paraphrase the essence of each competitor’s message. \n\n {{ $json.output }}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        848,
+        -240
+      ],
+      "id": "a77eaabb-e58a-4130-930e-ac2ed6788810",
+      "name": "Core Messages"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=For each competitor identified in your analysis, please describe the specific target audiences they focus on. Consider the following aspects when providing your responses:\n\nDemographics: Age, gender, location, income level, education, etc.\n\nPsychographics: Interests, values, lifestyle, motivations, pain points, and purchasing behaviors.\n\nMarket Segment: Are they targeting businesses (B2B), individual consumers (B2C), or specific industry sectors?\n\nChannels: Which platforms or channels do they use to reach their audience (e.g., social media, email, in-person events)? \n {{ $json.output }} \n\nNotable Engagement Patterns: What types of messages, offers, or content seem to resonate most with their audience?\n\nComparison: How does their audience differ from or overlap with your own target audience?\n\nIf possible, provide examples or evidence from their marketing materials, social media, or customer feedback to support your answers.  {{ $json.output }}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        1312,
+        -240
+      ],
+      "id": "c9c5dcdd-e285-4426-b9d9-86a498479a60",
+      "name": "Target Audiences"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Analyze the communication styles used by competitors to engage their target audiences. Based on your findings, what communication style would be most effective for connecting with these audiences?\n\nConsider the following in your response:\n\nThe tone, voice, and messaging frequently used by competitors in their marketing and customer interactions.\n\nThe preferences, values, and demographics of the competitors’ target audiences.\n\nThe communication channels (social media, email, website, ads, etc.) where these audiences are most active.\n\nAny notable patterns in language, emotional appeal, or content format that seem to resonate with these audiences.\n\nPlease provide specific examples or evidence from competitors’ campaigns, and explain why the recommended communication style would likely be most successful for their target audiences. \n {{ $json.output }}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        1776,
+        -240
+      ],
+      "id": "e18b9a77-bb11-4298-a5c3-6dda5a52b1bf",
+      "name": "CommunicationStyle"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=For each competitor, please provide adjectives that best describe their brand, products, or overall market presence. Be as specific and descriptive as possible to capture the unique characteristics of each competitor. \n {{ $json.output }}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        1312,
+        -432
+      ],
+      "id": "c304395c-f073-4866-b902-b32dc093fe3e",
+      "name": "AdjectivesEntity"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Please provide example messages that reflect the communication style best suited to our competitors’ target audiences.\n\nSpecify the competitor and briefly describe their primary audience segment (e.g., demographics, interests, values).\n\nAnalyze the tone, language, and format commonly used by the competitor to engage this audience (e.g., formal/informal, technical/simple, motivational/informative).\n\nShare 2-3 example messages that would resonate with this audience, using the identified style.\n\nIf possible, explain why each message is well-suited to the audience’s preferences and expectations. \n {{ $json.output }}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        2240,
+        -240
+      ],
+      "id": "e9fc109f-b6c9-46f6-97df-f5182af54bc8",
+      "name": "ExampleMessages"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        48,
+        -592
+      ],
+      "id": "ce4ac9c8-f05b-4005-bff9-3a80527ad786",
+      "name": "Cypher",
+      "credentials": {
+        "openRouterApi": {
+          "id": "U0a4bg7KOjNgcIPy",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        -80,
+        -592
+      ],
+      "id": "be30975f-4142-4e21-a4f4-0965e1659de1",
+      "name": "Deepseek",
+      "credentials": {
+        "openRouterApi": {
+          "id": "U0a4bg7KOjNgcIPy",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Search for web pages, news articles, blogs, forums, and other online sources for competitors to this entity. Focus on how the competitors present themselves, its public image, and the context in which it appears. Summarize key perceptions, notable mentions, and the types of narratives or discussions associated with the competitors across the indexed web.\\n\\nKey Elements to Include\\nOfficial Presence: Identify the competitors official website(s), published statements, and self-descriptions.\\n\\nMedia Coverage: Summarize news articles, press releases, and blog posts that discuss or analyze the competitors.\\n\\nCommunity Discussions: Highlight forum threads, Q&A sites, or comment sections where the competitors is a topic of conversation.\\n\\nPublic Perception: Synthesize opinions, sentiment, and recurring themes found in reviews, editorials, and user-generated content.\\n\\nNotable Mentions: Point out high-profile stories, viral articles, or widely referenced web content involving the competitors.\\n\\nContext: Specify the types of sources (e.g., news, blogs, forums, official pages) and the nature of the conversations (e.g., informational, critical, supportive, speculative).\n\n{{ $json.fields.EntitySummary }} {{ $json.fields.Persona }} {{ $json.fields.Adjectives }} {{ $json.fields['Core Messages'] }} {{ $json.fields['Target Audience'] }} {{ $json.fields.CommunicationStyle }} {{ $json.fields.ExampleMessages }}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        -80,
+        -816
+      ],
+      "id": "230479cf-5fc1-4349-b9a7-bdd1c5eeec8c",
+      "name": "EntitySummarization"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "f3af6c0e-5bca-4560-bf37-5502fe7967ae",
+              "name": "Entity Summarization",
+              "value": "={{ $json.output }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1904,
+        -816
+      ],
+      "id": "ca49a7d1-4a24-4ed2-b33f-7ec1b78c81d4",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "025d6af4-bb12-4938-96b4-8e809a02ba21",
+              "name": "Persona",
+              "value": "={{ $json.output }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1904,
+        -624
+      ],
+      "id": "717b0b4f-e747-4aff-b895-e5088a3d798f",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "216df1ac-d4a6-4ecf-bf6b-135862002d2a",
+              "name": "Adjectives",
+              "value": "={{ $json.output }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1904,
+        -432
+      ],
+      "id": "36046be8-fd75-41ba-ab78-e3e6b5a50ae8",
+      "name": "Edit Fields2"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "f72ad2c2-4ae4-43bb-8ec2-cfe8afdabe41",
+              "name": "Core Messages",
+              "value": "={{ $json.output }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1904,
+        336
+      ],
+      "id": "c4c7160e-166f-4b82-a177-2f5d4ca12a8a",
+      "name": "Edit Fields3"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "3f4e3962-9a81-4729-8f5e-99508e90ce12",
+              "name": "Audiences",
+              "value": "={{ $json.output }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1904,
+        144
+      ],
+      "id": "6d6d05c9-c5a3-4c77-83af-d9fc827e5b37",
+      "name": "Edit Fields4"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "6c745812-f6a5-44ff-bc48-6dde49095347",
+              "name": "Style",
+              "value": "={{ $json.output }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2368,
+        -48
+      ],
+      "id": "de2e2c0d-0ab3-45fa-aa46-5856e2860a48",
+      "name": "Edit Fields5"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "cfc7072b-4dc3-4db5-8dc6-24b04f83ff72",
+              "name": "examplemessages",
+              "value": "={{ $json.output }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2704,
+        -240
+      ],
+      "id": "7d86a405-a380-4ffa-b3b4-44767b9bbf3d",
+      "name": "Edit Fields6"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Access static data for the workflow\nconst workflowStaticData = $getWorkflowStaticData('global');\n// Initialize or increment the counter\nworkflowStaticData.executionIndex = !workflowStaticData?.executionIndex\n  ? 1\n  : workflowStaticData.executionIndex + 1;\n// Output the current count as an attribute\nreturn [{ executionCount: workflowStaticData.executionIndex }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1904,
+        720
+      ],
+      "id": "f0287f4a-5aba-41c4-9a21-f9b767526f81",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        2736,
+        384
+      ],
+      "id": "90a5ed8d-8b7b-4cde-b148-84c97bb42b52",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        2704,
+        -48
+      ],
+      "id": "b964eb6d-66c4-4599-a82e-aa4d4c1d4bef",
+      "name": "Merge1"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        2368,
+        144
+      ],
+      "id": "a5207bdd-ae61-477f-84d2-7dc02745f689",
+      "name": "Merge2"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        2368,
+        336
+      ],
+      "id": "12bbd198-bbbc-4726-b96d-64b8b3fb84a6",
+      "name": "Merge3"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        2368,
+        -432
+      ],
+      "id": "a4f0e389-6936-4486-95e9-fd2816b1e93e",
+      "name": "Merge4"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        2368,
+        -624
+      ],
+      "id": "0993840d-2d61-4af7-a2ec-3dda4ea4263e",
+      "name": "Merge5"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        2368,
+        -816
+      ],
+      "id": "fa5a922e-6cd3-41eb-92cb-9c0af6c4c3b9",
+      "name": "Merge6"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        2704,
+        -528
+      ],
+      "id": "255f314f-1f9a-4c63-89e8-42cff3fdce48",
+      "name": "Merge9"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        2928,
+        -624
+      ],
+      "id": "480a7e86-2bc5-4efb-9d09-5e4904b5f70f",
+      "name": "Merge10"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        3600,
+        -240
+      ],
+      "id": "2ed2fedc-71df-44b6-afad-a97ee86dc369",
+      "name": "Merge12"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        3376,
+        48
+      ],
+      "id": "146d1593-7125-42dd-a43a-272ded22d3ce",
+      "name": "Merge11"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        2704,
+        240
+      ],
+      "id": "5b30acfb-448f-4d82-856a-c749618959f2",
+      "name": "Merge8"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        3152,
+        -144
+      ],
+      "id": "663743d9-cfc7-4e34-8a83-21814b8e7821",
+      "name": "Merge7"
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "authentication": "airtableTokenApi",
+        "baseId": {
+          "__rl": true,
+          "value": "https://airtable.com/appXBHmjTdHh5YZ7U/tbl68MH4pQgGu7XS5/viwnsmAF4PRDYb88F?blocks=hide",
+          "mode": "url"
+        },
+        "tableId": {
+          "__rl": true,
+          "value": "https://airtable.com/appXBHmjTdHh5YZ7U/tbl68MH4pQgGu7XS5/viwnsmAF4PRDYb88F?blocks=hide",
+          "mode": "url"
+        },
+        "triggerField": "Created",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.airtableTrigger",
+      "typeVersion": 1,
+      "position": [
+        -304,
+        -816
+      ],
+      "id": "5182ba3c-8d60-498b-955a-049841adfc82",
+      "name": "Airtable Trigger",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "UxM8ezI0fcNDfGnr",
+          "name": "Airtable account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "base": {
+          "__rl": true,
+          "value": "appXBHmjTdHh5YZ7U",
+          "mode": "list",
+          "cachedResultName": "N8nFlow",
+          "cachedResultUrl": "https://airtable.com/appXBHmjTdHh5YZ7U"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblVC1LzaOEk6VcCB",
+          "mode": "list",
+          "cachedResultName": "Competitors",
+          "cachedResultUrl": "https://airtable.com/appXBHmjTdHh5YZ7U/tblVC1LzaOEk6VcCB"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "EntitySummary": "={{ $json['Entity Summarization'] }}",
+            "Persona": "={{ $json.Persona }}",
+            "Adjectives": "={{ $json.Adjectives }}",
+            "Core Messages": "={{ $json['Core Messages'] }}",
+            "Target Audience": "={{ $json.Audiences }}",
+            "CommunicationStyle": "={{ $json.Style }}",
+            "ExampleMessages": "={{ $json.examplemessages }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "EntitySummary",
+              "displayName": "EntitySummary",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Persona",
+              "displayName": "Persona",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Adjectives",
+              "displayName": "Adjectives",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Core Messages",
+              "displayName": "Core Messages",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Target Audience",
+              "displayName": "Target Audience",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "CommunicationStyle",
+              "displayName": "CommunicationStyle",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "ExampleMessages",
+              "displayName": "ExampleMessages",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Created",
+              "displayName": "Created",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        3920,
+        -288
+      ],
+      "id": "9872c9c5-d98d-4663-8710-7b240a173422",
+      "name": "Create a record",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "UxM8ezI0fcNDfGnr",
+          "name": "Airtable account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Message a model in Perplexity": {
+      "ai_tool": [
+        [
+          {
+            "node": "EntitySummarization",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Persona": {
+      "main": [
+        [
+          {
+            "node": "Core Messages",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AdjectivesEntity",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Core Messages": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields3",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Target Audiences",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Target Audiences": {
+      "main": [
+        [
+          {
+            "node": "CommunicationStyle",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Edit Fields4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "CommunicationStyle": {
+      "main": [
+        [
+          {
+            "node": "ExampleMessages",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Edit Fields5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Deepseek": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "EntitySummarization",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Persona",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Persona",
+            "type": "ai_languageModel",
+            "index": 1
+          },
+          {
+            "node": "AdjectivesEntity",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Core Messages",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Target Audiences",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "CommunicationStyle",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "ExampleMessages",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cypher": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "EntitySummarization",
+            "type": "ai_languageModel",
+            "index": 1
+          },
+          {
+            "node": "Core Messages",
+            "type": "ai_languageModel",
+            "index": 1
+          },
+          {
+            "node": "Target Audiences",
+            "type": "ai_languageModel",
+            "index": 1
+          },
+          {
+            "node": "CommunicationStyle",
+            "type": "ai_languageModel",
+            "index": 1
+          },
+          {
+            "node": "ExampleMessages",
+            "type": "ai_languageModel",
+            "index": 1
+          },
+          {
+            "node": "AdjectivesEntity",
+            "type": "ai_languageModel",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "EntitySummarization": {
+      "main": [
+        [
+          {
+            "node": "Persona",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AdjectivesEntity": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ExampleMessages": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Merge6",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Merge5",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Edit Fields2": {
+      "main": [
+        [
+          {
+            "node": "Merge4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields3": {
+      "main": [
+        [
+          {
+            "node": "Merge3",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Edit Fields4": {
+      "main": [
+        [
+          {
+            "node": "Merge2",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Edit Fields5": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Edit Fields6": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge2",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge3",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge5",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge6",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge4",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge1": {
+      "main": [
+        [
+          {
+            "node": "Merge7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Merge7",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge2": {
+      "main": [
+        [
+          {
+            "node": "Merge8",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge3": {
+      "main": [
+        [
+          {
+            "node": "Merge8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge4": {
+      "main": [
+        [
+          {
+            "node": "Merge9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge5": {
+      "main": [
+        [
+          {
+            "node": "Merge9",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge6": {
+      "main": [
+        [
+          {
+            "node": "Merge10",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge9": {
+      "main": [
+        [
+          {
+            "node": "Merge10",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge10": {
+      "main": [
+        [
+          {
+            "node": "Merge12",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge12": {
+      "main": [
+        [
+          {
+            "node": "Create a record",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge11": {
+      "main": [
+        [
+          {
+            "node": "Merge12",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge8": {
+      "main": [
+        [
+          {
+            "node": "Merge11",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge7": {
+      "main": [
+        [
+          {
+            "node": "Merge11",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Airtable Trigger": {
+      "main": [
+        [
+          {
+            "node": "EntitySummarization",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "3daae1ec-79db-4b18-b1cc-b252f5f540c3",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "1b2acf6335783249b428ec232a8da689f33ea1e5291dd7cc36a412d57bc021a5"
+  },
+  "id": "TeaN4P2huFaQHKoB",
+  "tags": []
+}
